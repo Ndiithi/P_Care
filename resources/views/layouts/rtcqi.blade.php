@@ -326,7 +326,7 @@ use Illuminate\Support\Facades\Gate;
                         <span>Pharma &copy; 2022, <script>
                                 document.write(new Date().getFullYear());
                             </script></span>
-                        | <a href="http://helpdesk.nphl.go.ke/">RTCQI HELP DESK</a>
+                        | <a href="#">HELP DESK</a>
                     </div>
                 </div>
             </footer>

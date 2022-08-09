@@ -39,7 +39,7 @@ This project is powered by the laravel framework.
 
 * clone project
   ```sh
-  git clone https://github.com/GOK-NPHL/pharma
+  git clone https://github.com/Ndiithi/P_Care.git
   ```
 
 * cd
