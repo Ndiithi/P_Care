@@ -1,4 +1,5 @@
 import React from 'react';
+import AddItem from '../add_item/AddItem';
 import StatsLabel from '../utils/stats/StatsLabel';
 
 class DashMenu extends React.Component {
@@ -39,7 +40,9 @@ class DashMenu extends React.Component {
                     </div>
 
                     <div className="col-xl-3 ">
-                        <a href='#'>
+                        <a href="#" onClick={
+                            ()=>{$('#addItem').modal('toggle');}
+                            }>
                             <StatsLabel
                                 textStyling={'text-success'}
                                 text={'Add products'}
@@ -75,7 +78,7 @@ class DashMenu extends React.Component {
                     </div>
                 </div>
 
-                <div style={{ "margin-top": "10px" }} className="row">
+                <div style={{ "marginTop": "10px" }} className="row">
 
                     <div className="col-xl-3 ">
                         <a href='/reports/purchases'>
@@ -102,6 +105,8 @@ class DashMenu extends React.Component {
                     </div>
 
                 </div>
+
+                <AddItem/>
             </React.Fragment>
         );
     }
