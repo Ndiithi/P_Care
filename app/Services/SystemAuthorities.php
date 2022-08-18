@@ -28,7 +28,8 @@ class SystemAuthorities
         'view_sales_report' => 'view_sales_report',
         'view_stocks_report' => 'view_stocks_report',
         'view_purchases_report' => 'view_purchases_report',
-        'view_datamining_module' => 'view_datamining_module'
-
+        'view_datamining_module' => 'view_datamining_module',
+        'view_catalog' => 'view_catalog'
+        
     ];
 }

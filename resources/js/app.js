@@ -23,6 +23,7 @@ require('./components/reports/mining/Miner');
 require('./components/system/role/Roles');
 require('./components/system/users/Users');
 require('./components/system/users/Profile');
+require('./components/system/catalog/Catalog');
 require('./components/system/auth/axios_login');
 require('xlsx');
 require("uuid/v4");

@@ -29,6 +29,7 @@ class AuthoritiesSeed extends Seeder
             array('name' => 'view_stocks_report', 'group' => 'report', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
             array('name' => 'view_purchases_report', 'group' => 'report', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
             array('name' => 'view_datamining_module', 'group' => 'report', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+            array('name' => 'view_catalog', 'group' => 'system', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
             
         );
         $authObj = new Authority();

@@ -34,3 +34,4 @@ Route::get('/reports/mining', 'Mining\Miner@index')->name('miningIndex');
 Route::get('/service/profile', 'Service\UsersController@userProfile')->name('profile');
 Route::get('/service/roles', 'Service\RolesController@index')->name('rolesIndex');
 Route::get('/service/users', 'Service\UsersController@index')->name('usersIndex');
+Route::get('/service/catalog', 'Service\CatalogController@index')->name('catalogIndex');

@@ -131,6 +131,9 @@ use Illuminate\Support\Facades\Gate;
                     <div id="collapsePages" class="collapse menu-body system-body" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">System settings</h6>
+                            <?php if (Gate::allows('view_catalog')) { ?>
+                                <a onclick="localStorage.setItem('page', 'Catalog');" class="collapse-item" href="{{ route('catalogIndex') }}">Catalog</a>
+                            <?php } ?>
                             <?php if (Gate::allows('view_user')) { ?>
                                 <a onclick="localStorage.setItem('page', 'Users');" class="collapse-item" href="{{ route('usersIndex') }}">Users</a>
                             <?php } ?>

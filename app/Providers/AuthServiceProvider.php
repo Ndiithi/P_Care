@@ -29,28 +29,28 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-      
+
         Gate::define(SystemAuthorities::$authorities['edit_user'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['edit_user']);
         });
         Gate::define(SystemAuthorities::$authorities['edit_role'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['edit_role']);
         });
-       
+
         Gate::define(SystemAuthorities::$authorities['delete_user'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['delete_user']);
         });
         Gate::define(SystemAuthorities::$authorities['delete_role'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['delete_role']);
         });
-      
+
         Gate::define(SystemAuthorities::$authorities['add_user'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['add_user']);
         });
         Gate::define(SystemAuthorities::$authorities['add_role'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['add_role']);
         });
-        
+
         Gate::define(SystemAuthorities::$authorities['view_system_settings'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_system_settings']);
         });
@@ -60,14 +60,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define(SystemAuthorities::$authorities['view_dashboard'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_dashboard']);
         });
-       
+
         Gate::define(SystemAuthorities::$authorities['view_user'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_user']);
         });
         Gate::define(SystemAuthorities::$authorities['view_role'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_role']);
         });
-       
+
         Gate::define(SystemAuthorities::$authorities['view_roles_not_assigned'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_roles_not_assigned']);
         });
@@ -86,8 +86,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define(SystemAuthorities::$authorities['view_datamining_module'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_datamining_module']);
         });
-
-        
+        Gate::define(SystemAuthorities::$authorities['view_catalog'], function ($user) {
+            return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_catalog']);
+        });
     }
 
     private function runAthurizationQuery($authority)
