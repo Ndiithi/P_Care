@@ -13,7 +13,7 @@ require('./bootstrap');
  */
 
 require('./components/dashboard/Dashboard');
-e
+
 require('./components/reports/sales/SalesReport');
 require('./components/reports/purchases/PurchasesReport');
 require('./components/reports/stocks/StocksReport');
