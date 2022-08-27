@@ -57,7 +57,7 @@ use Illuminate\Support\Facades\Gate;
                     <a class="nav-link " href="{{ route('home') }}" onclick="localStorage.setItem('page', 'Dashboard');">
                         <i class="fas fa-fw fa-tachometer-alt"></i>
                         <span>Dashboard</span>
-
+                        
                     </a>
                 </li>
 
@@ -79,12 +79,12 @@ use Illuminate\Support\Facades\Gate;
                 <!-- Nav Item - Pages Collapse Menu -->
                 <li class="nav-item menu-head pos-head">
                     <!-- change -->
-                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         <i class="fas fa-cart-plus"></i>
                         <span>POS & Invoices</span>
                     </a>
                     <!-- change -->
-                    <div id="collapseTwo" class="collapse menu-body pos-body" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div id="collapseOne" class="collapse menu-body pos-body" aria-labelledby="headingOne" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">POS:</h6>
                         
@@ -92,7 +92,7 @@ use Illuminate\Support\Facades\Gate;
                                 <!-- change -->
                                 <a class="collapse-item" onclick="localStorage.setItem('page', 'POS');" href="{{ route('posIndex') }}">POS</a>
                             <?php } ?>
-                            
+
                         </div>
                     </div>
                 </li>
@@ -380,12 +380,23 @@ use Illuminate\Support\Facades\Gate;
 
     <!-- Custom scripts for all pages-->
     <script>
-        let page = localStorage.getItem('page', 'Log book');
+        // stocks
+        // purchases
+        // mining
+        // sales
+        // POS
+        
+        // Dashboard
+        // Catalog
+        // Users
+        // Roles
+
+        let page = localStorage.getItem('page');
         //console.log("the page is " + page);
         document.getElementsByClassName("menu-head")[0].classList.remove("active");
         document.getElementsByClassName("menu-body")[0].classList.remove("show");
 
-        if (page == 'stocks' || page == 'purchases' || page == 'sales') {
+        if (page == 'stocks' || page == 'purchases' || page == 'sales' || page == 'mining') {
             let head = document.getElementsByClassName("reports-head");
             head[0].classList.add("active");
             let body = document.getElementsByClassName("reports-body");
@@ -394,11 +405,6 @@ use Illuminate\Support\Facades\Gate;
             let head = document.getElementsByClassName("reports-head");
             head[0].classList.remove("active");
             let body = document.getElementsByClassName("reports-body");
-            body[0].classList.remove("show");
-            
-            let head = document.getElementsByClassName("pos-head");
-            head[0].classList.remove("show");
-            let body = document.getElementsByClassName("pos-body");
             body[0].classList.remove("show");
         }
 
@@ -411,6 +417,18 @@ use Illuminate\Support\Facades\Gate;
             let head = document.getElementsByClassName("system-head");
             head[0].classList.remove("active");
             let body = document.getElementsByClassName("system-body");
+            body[0].classList.remove("show");
+        }
+
+        if (page == 'POS' ) {
+            let head = document.getElementsByClassName("pos-head");
+            head[0].classList.add("active");
+            let body = document.getElementsByClassName("pos-body");
+            body[0].classList.add("show");
+        } else {
+            let head = document.getElementsByClassName("pos-head");
+            head[0].classList.remove("active");
+            let body = document.getElementsByClassName("pos-body");
             body[0].classList.remove("show");
         }
 
