@@ -18,6 +18,8 @@ require('./components/reports/sales/SalesReport');
 require('./components/reports/purchases/PurchasesReport');
 require('./components/reports/stocks/StocksReport');
 require('./components/reports/mining/Miner');
+require('./components/pos/POS');
+
 
 //Intrface code
 require('./components/system/role/Roles');

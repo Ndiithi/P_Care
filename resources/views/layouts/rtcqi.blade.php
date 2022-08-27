@@ -63,6 +63,42 @@ use Illuminate\Support\Facades\Gate;
 
             <?php } ?>
 
+            <!--POS & Invoice section  -->
+            <?php
+
+            if (Gate::allows('view_pos')) { ?>
+                <!-- Divider -->
+
+                <hr class="sidebar-divider">
+
+                <!-- Heading -->
+                <div class="sidebar-heading">
+                    POS
+                </div>
+
+                <!-- Nav Item - Pages Collapse Menu -->
+                <li class="nav-item menu-head pos-head">
+                    <!-- change -->
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-cart-plus"></i>
+                        <span>POS & Invoices</span>
+                    </a>
+                    <!-- change -->
+                    <div id="collapseTwo" class="collapse menu-body pos-body" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">POS:</h6>
+                        
+                            <?php if (Gate::allows('view_stocks_report')) { ?>
+                                <!-- change -->
+                                <a class="collapse-item" onclick="localStorage.setItem('page', 'POS');" href="{{ route('posIndex') }}">POS</a>
+                            <?php } ?>
+                            
+                        </div>
+                    </div>
+                </li>
+            <?php } ?>
+
+
             <!--Reports section  -->
             <?php
 
@@ -349,7 +385,7 @@ use Illuminate\Support\Facades\Gate;
         document.getElementsByClassName("menu-head")[0].classList.remove("active");
         document.getElementsByClassName("menu-body")[0].classList.remove("show");
 
-        if (page == 'Log book' || page == 'Pt' || page == 'SPI-RT') {
+        if (page == 'stocks' || page == 'purchases' || page == 'sales') {
             let head = document.getElementsByClassName("reports-head");
             head[0].classList.add("active");
             let body = document.getElementsByClassName("reports-body");
@@ -359,9 +395,14 @@ use Illuminate\Support\Facades\Gate;
             head[0].classList.remove("active");
             let body = document.getElementsByClassName("reports-body");
             body[0].classList.remove("show");
+            
+            let head = document.getElementsByClassName("pos-head");
+            head[0].classList.remove("show");
+            let body = document.getElementsByClassName("pos-body");
+            body[0].classList.remove("show");
         }
 
-        if (page == 'Users' || page == 'Roles' || page == 'Organization units') {
+        if (page == 'Users' || page == 'Roles' || page == 'Catalog') {
             let head = document.getElementsByClassName("system-head");
             head[0].classList.add("active");
             let body = document.getElementsByClassName("system-body");

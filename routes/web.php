@@ -35,3 +35,5 @@ Route::get('/service/profile', 'Service\UsersController@userProfile')->name('pro
 Route::get('/service/roles', 'Service\RolesController@index')->name('rolesIndex');
 Route::get('/service/users', 'Service\UsersController@index')->name('usersIndex');
 Route::get('/service/catalog', 'Service\CatalogController@index')->name('catalogIndex');
+Route::get('/service/pos', 'Service\PosController@index')->name('posIndex');
+

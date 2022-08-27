@@ -27,8 +27,7 @@ class DashMenu extends React.Component {
                 <div className="row">
 
                     <div className="col-xl-3">
-                        <a href='#'>
-
+                        <a href='/service/pos'>
                             <StatsLabel
                                 textStyling={'text-primary'}
                                 text={'POS'}
