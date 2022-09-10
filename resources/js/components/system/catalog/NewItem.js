@@ -73,7 +73,7 @@ class NewItem extends React.Component {
                         </div>
                         <div className="col-md-3 mb-3">
                             <label htmlFor="validationCustomUsername">Price per unit</label>
-                            <input type="text" onChange={event => this.setState({ price: event.target.value })}
+                            <input type="number" onChange={event => this.setState({ price: event.target.value })}
                                 value={this.state.price} className="form-control" id="role_name" required />
                             <div className="valid-feedback">
                                 Looks good!
