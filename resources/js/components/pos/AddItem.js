@@ -3,15 +3,11 @@ import ReactDOM from 'react-dom';
 import DualListBox from 'react-dual-listbox';
 import { FetchUserAuthorities } from '../utils/Helpers';
 
-
 class AddItem extends React.Component {
 
 
     constructor(props) {
         super(props);
-        this.state = {
-
-        };
 
     }
 
@@ -30,6 +26,7 @@ class AddItem extends React.Component {
                     <div className="form-row">
                         <div className="col-md-8 col-sm-8">
                             <input type="text" className="form-control" placeholder='Search Product' id="validationCustom01" required />
+                           
                             <div className="valid-feedback">
                                 Looks good!
                             </div>
