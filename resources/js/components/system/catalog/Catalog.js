@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FetchRoles, DeleteRole, FetchUserAuthorities, getCatalogs } from '../../utils/Helpers';
+import {  getCatalogs } from '../../utils/Helpers';
 import Pagination from "react-js-pagination";
 import NewItem from './NewItem';
 
