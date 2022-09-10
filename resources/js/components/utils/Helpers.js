@@ -100,7 +100,7 @@ export async function UpdateRole(role_id, roleName, authoritiesSelected) {
 export async function Saveuser(first_name, last_name, email, password, role, selectedViewableRoles) {
 
     try {
-       
+
 
         const response = await axios({
             method: 'put',
@@ -216,9 +216,36 @@ export async function DeleteUser(user) {
         return err.response
     }
 }
+
 function uuidCompare(one, c) {
     return one.replace(/[xy]/g, function (c) {
         var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
         return v.toString(16);
     });
 }
+
+
+export async function SaveCatalog(
+    productName,
+    manufacturer,
+    price,
+    productID
+) {
+    try {
+        const response = await axios({
+            method: 'put',
+            url: `${settings.rtcqiBaseApi}/save_catalog`,
+            data: {
+                name: productName,
+                manufacturer: manufacturer,
+                price: price,
+                productID: productID
+            }
+        });
+        return response;
+    } catch (err) {
+        return err.response
+    }
+}
+
+

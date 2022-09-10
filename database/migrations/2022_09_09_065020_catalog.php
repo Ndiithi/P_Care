@@ -16,7 +16,7 @@ class Catalog extends Migration
         Schema::create('catalogs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->date("manufacturer");
+            $table->string("manufacturer");
             $table->string("product_id");
             $table->timestamps();
         });

@@ -28,6 +28,6 @@ class CreateAuthorityRolesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('authority_roles');
+        Schema::dropIfExists('authority_role');
     }
 }

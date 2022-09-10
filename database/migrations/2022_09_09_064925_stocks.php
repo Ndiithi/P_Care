@@ -18,6 +18,7 @@ class Stocks extends Migration
             $table->string('name');
             $table->date("date_purchased");
             $table->date("expiry_date");
+            $table->string("batch_number");
             $table->string("product_id");
             $table->timestamps();
         });
