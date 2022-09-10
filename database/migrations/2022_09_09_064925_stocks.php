@@ -15,7 +15,7 @@ class Stocks extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('no_of_items');
             $table->date("date_purchased");
             $table->date("expiry_date");
             $table->string("batch_number");

@@ -248,8 +248,6 @@ export async function SaveCatalog(
     }
 }
 
-
-
 export async function getCatalogs() {
 
     try {
@@ -264,3 +262,25 @@ export async function getCatalogs() {
 }
 
 
+export async function saveProduct(
+    productId,
+    batchNumber,
+    expiryDate,
+    noOfItems
+) {
+    try {
+        const response = await axios({
+            method: 'put',
+            url: `${settings.rtcqiBaseApi}/save_product`,
+            data: {
+                productId: productId,
+                batchNumber: batchNumber,
+                expiryDate: expiryDate,
+                noOfItems: noOfItems
+            }
+        });
+        return response;
+    } catch (err) {
+        return err.response
+    }
+}
