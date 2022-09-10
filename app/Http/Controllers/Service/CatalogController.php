@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Price;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CatalogController extends Controller
 {
@@ -71,5 +73,17 @@ class CatalogController extends Controller
         } catch (Exception $ex) {
             return ['Error' => '500', 'Message' => 'Could not Updated user ' . $ex->getMessage()];
         }
+    }
+
+    public function getProducts()
+    {
+
+        $catalogs = DB::select("      
+            select * from catalogs t1
+            inner join (select distinct(product_id),price from prices a where from_date= (select max(from_date) from prices b where a.product_id=b.product_id)) as t2
+            on t1.product_id=t2.product_id
+        ");
+
+        return  $catalogs;
     }
 }

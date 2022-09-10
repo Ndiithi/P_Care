@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FetchRoles, DeleteRole, FetchUserAuthorities } from '../../utils/Helpers';
+import { FetchRoles, DeleteRole, FetchUserAuthorities, getCatalogs } from '../../utils/Helpers';
 import Pagination from "react-js-pagination";
 import NewItem from './NewItem';
 
@@ -24,6 +24,16 @@ class Catalog extends React.Component {
 
     }
 
+    componentDidMount() {
+        (async () => {
+            let catalogs = await getCatalogs();
+            this.setState({
+                catalogs: catalogs,
+            });
+        })();
+    }
+
+
     handlePageChange(pageNumber) {
         //console.log(`active page is ${pageNumber}`);
         let pgNumber = pageNumber * 10 + 1;
@@ -46,14 +56,17 @@ class Catalog extends React.Component {
             marginBottom: "5px"
         };
 
+
         let catalogs = [];
         if (this.state.catalogs.length > 0) {
             this.state.catalogs.map((catalog, index) => {
                 catalogs.push(<tr key={index}>
                     <th scope="row">{index + 1}</th>
-                    <td>{catalog.first_name} {catalog.last_name}</td>
-                    <td>{catalog.email}</td>
-                    <td>{catalog.role_name}</td>
+                    <td>{catalog.name} {catalog.last_name}</td>
+                    <td>{catalog.manufacturer}</td>
+                    <td>{catalog.product_id}</td>
+                    <td>{catalog.price}</td>
+                    <td>{catalog.updated_at}</td>
                     {
                         this.state.allowedPermissions.includes('edit_catalog') ||
                             this.state.allowedPermissions.includes('delete_catalog') ?
@@ -89,7 +102,6 @@ class Catalog extends React.Component {
                                 }
                             </td> : ''
                     }
-
                 </tr>
                 );
             });
@@ -100,7 +112,6 @@ class Catalog extends React.Component {
                 })
             }
 
-
         }
 
 
@@ -109,9 +120,13 @@ class Catalog extends React.Component {
                 <div className="form-group mb-2">
                     <input type="text"
                         onChange={(event) => {
+                            console.log(this.state.allTableElements)
                             let currCatalogTableEl = this.state.allTableElements.filter(
-
+                                element =>
+                                element['props']['children'][1]['props']['children'][0].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) ||
+                                element['props']['children'][2]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) 
                             );
+                                    
 
                             this.setState({
                                 currCatalogTableEl: currCatalogTableEl,
@@ -129,8 +144,10 @@ class Catalog extends React.Component {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Role</th>
+                            <th scope="col">Manufacturer</th>
+                            <th scope="col">Product Id</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Update At</th>
                             {
                                 this.state.allowedPermissions.includes('edit_catalog') ||
                                     this.state.allowedPermissions.includes('delete_catalog') ?
@@ -158,7 +175,10 @@ class Catalog extends React.Component {
 
         return (
             <React.Fragment>
-                <NewItem/>
+                <NewItem />
+                <hr/>
+                <br/>
+                {pageContent}
             </React.Fragment>
         );
     }

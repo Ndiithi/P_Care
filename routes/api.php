@@ -38,3 +38,4 @@ Route::delete('/delete_user', 'Service\UsersController@deleteUser');
 Route::get('/users_details', 'Service\UsersController@getUsersDetails');
 
 Route::put('/save_catalog', 'Service\CatalogController@saveProduct');
+Route::get('/get_catalogs', 'Service\CatalogController@getProducts');
