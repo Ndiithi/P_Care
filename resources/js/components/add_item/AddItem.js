@@ -1,5 +1,6 @@
 import React from 'react';
 import Select from 'react-select'
+import { getCatalogs } from '../utils/Helpers';
 
 
 class AddItem extends React.Component {
@@ -7,17 +8,32 @@ class AddItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            options: [
-                { value: 'chocolate', label: 'Chocolate' },
-                { value: 'strawberry', label: 'Strawberry' },
-                { value: 'vanilla', label: 'Vanilla' }
-            ]
-
+            catalogs: []
         }
+        this.getCatalogs = this.getCatalogs.bind(this);
+
     }
 
     componentDidMount() {
 
+        this.getCatalogs();
+
+    }
+
+    getCatalogs() {
+        (async () => {
+
+            let data = await getCatalogs();
+
+
+            let catalogs = data.map((val) => {
+                return { value: val.product_id, label: val.name }
+            });
+            console.log(catalogs);
+            this.setState({
+                catalogs: catalogs,
+            });
+        })();
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -38,12 +54,12 @@ class AddItem extends React.Component {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <form novalidate>
+                                <form noValidate>
                                     <div class="form-row">
                                         <div class="col-md-4 mb-3">
                                             <label for="validationCustom01">Product</label>
                                             {/* <input type="text" class="form-control" id="validationCustom01" required /> */}
-                                            <Select options={this.state.options} />
+                                            <Select options={this.state.catalogs} />
                                             <div class="valid-feedback">
                                                 Looks good!
                                             </div>
