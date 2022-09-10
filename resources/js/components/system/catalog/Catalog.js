@@ -20,19 +20,26 @@ class Catalog extends React.Component {
             endeTableData: 10,
             activePage: 1,
         }
-        // this.onChange = this.onChange.bind(this);
+        this.getCatalogs = this.getCatalogs.bind(this);
 
     }
 
     componentDidMount() {
+
+        this.getCatalogs();
+
+    }
+
+    getCatalogs() {
         (async () => {
+
             let catalogs = await getCatalogs();
             this.setState({
                 catalogs: catalogs,
+                allTableElements: []
             });
         })();
     }
-
 
     handlePageChange(pageNumber) {
         //console.log(`active page is ${pageNumber}`);
@@ -123,10 +130,10 @@ class Catalog extends React.Component {
                             console.log(this.state.allTableElements)
                             let currCatalogTableEl = this.state.allTableElements.filter(
                                 element =>
-                                element['props']['children'][1]['props']['children'][0].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) ||
-                                element['props']['children'][2]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) 
+                                    element['props']['children'][1]['props']['children'][0].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) ||
+                                    element['props']['children'][2]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase())
                             );
-                                    
+
 
                             this.setState({
                                 currCatalogTableEl: currCatalogTableEl,
@@ -175,9 +182,9 @@ class Catalog extends React.Component {
 
         return (
             <React.Fragment>
-                <NewItem />
-                <hr/>
-                <br/>
+                <NewItem getCatalogs={this.getCatalogs}/>
+                <hr />
+                <br />
                 {pageContent}
             </React.Fragment>
         );

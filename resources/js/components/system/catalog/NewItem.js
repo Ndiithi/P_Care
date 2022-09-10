@@ -14,7 +14,7 @@ class NewItem extends React.Component {
             productName: "",
             manufacturer: "",
             price: "",
-            productID:""
+            productID: ""
         };
         this.saveItem = this.saveItem.bind(this);
 
@@ -42,7 +42,7 @@ class NewItem extends React.Component {
                 })
                 $('#saveCatalogModal').modal('toggle');
                 // this.props.toggleDisplay();
-                // this.props.fetchRoles();
+                this.props.getCatalogs();
             }
         })();
 
