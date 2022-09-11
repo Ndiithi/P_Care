@@ -47,6 +47,7 @@ class StockController extends Controller
         inner join (select distinct(a.product_id),a.price from prices a where from_date= (select max(from_date) 
         from prices b where a.product_id=b.product_id)) as t2
         on cat.product_id=t2.product_id
+        where no_of_items>0
         ");
 
         return  $stocks;
