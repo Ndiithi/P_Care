@@ -34,7 +34,7 @@ class AddItem extends React.Component {
             let data = await getStocks();
 
             let catalogs = data.map((val) => {
-                return { value: val.product_id+"-"+ val.batch_no, label: val.name+ "-"+ val.batch_no}
+                return { value: val.product_id + "-" + val.batch_no, label: val.name + "-" + val.batch_no }
             });
             this.setState({
                 catalogs: catalogs,
@@ -47,22 +47,48 @@ class AddItem extends React.Component {
         if (Object.keys(this.state.selectedValue).length != 0) {
             let tableContent = this.state.tableContent;
             let totalPrice = this.state.totalPrice;
+            let data = this.state.data;
+            let showModal = false;
+            let responseMessage = "";
             this.state.data.forEach(
                 (catalog, index) => {
 
-                    if (catalog.product_id+"-"+ catalog.batch_no == this.state.selectedValue.value
-                        ) {
+                    if (catalog.product_id + "-" + catalog.batch_no == this.state.selectedValue.value
+                    ) {
 
                         totalPrice += catalog.price;
                         tableContent.push(catalog);
+                        //remove from list as all available items sold out
+                        if (catalog.no_of_items <= 1) {
+                            data.splice(index, 1);
+                            showModal = true;
+                            responseMessage = "Item Out Of Stock";
+                        } else {
+                            catalog.no_of_items = catalog.no_of_items - 1;
+                            data[index] = catalog;
+                        }
                         // return;
                     }
                 }
             );
+
+            let catalogs = data.map((val) => {
+                return { value: val.product_id + "-" + val.batch_no, label: val.name + "-" + val.batch_no }
+            });
+
+
+
             this.setState({
                 tableContent: tableContent,
-                totalPrice: totalPrice
+                totalPrice: totalPrice,
+                data: data,
+                catalogs: catalogs,
+                responseMessage: responseMessage
             });
+            if (showModal) {
+                $('#saveModal').modal('toggle');
+            }
+
         }
     }
 
@@ -160,7 +186,7 @@ class AddItem extends React.Component {
                     </tbody>
 
                 </table>
-                <button onClick={()=>this.checkOut()} className="btn btn-block btn-info">Checkout</button>
+                <button onClick={() => this.checkOut()} className="btn btn-block btn-info">Checkout</button>
 
 
                 < div className="modal fade" id="saveModal" tabIndex="-1" role="dialog" aria-labelledby="saveModalTitle" aria-hidden="true" >
