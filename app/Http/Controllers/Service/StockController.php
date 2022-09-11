@@ -19,16 +19,28 @@ class StockController extends Controller
             $noOfItems = $request->noOfItems;
             $productId    = $request->productId;
             $expiryDate = $request->expiryDate;
+            $batchNo = $request->batchNo;
+
             $date = date('Y-m-d H:i:s');
 
 
-            $stock = new Stock([
-                'no_of_items' => $noOfItems,
-                'product_id' => $productId,
-                'expiry_date' => $expiryDate,
-                'date_purchased' => $date
-            ]);
-            $stock->save();
+            $stock = Stock::where('product_id', '=', $productId)->where('batch_no', '=', $batchNo)->first();
+            if ($stock === null) {
+                $stock = new Stock([
+                    'no_of_items' => $noOfItems,
+                    'product_id' => $productId,
+                    'expiry_date' => $expiryDate,
+                    'date_purchased' => $date,
+                    'batch_no'=>$batchNo
+                ]);
+                $stock->save();
+            } else {
+                
+                DB::update("      
+                    UPDATE stocks
+                    SET no_of_items  = no_of_items + $noOfItems  where product_id = '$productId' and batch_no = '$batchNo'
+                ");
+            }
 
             return response()->json(['Message' => 'Saved successfully'], 200);
         } catch (Exception $ex) {
@@ -41,7 +53,7 @@ class StockController extends Controller
     {
 
         $stocks = DB::select("      
-        SELECT no_of_items, expiry_date, no_of_items, s.product_id,cat.name, t2.price,
+        SELECT no_of_items, expiry_date, no_of_items, s.product_id,s.batch_no,cat.name, t2.price,
         cat.manufacturer FROM stocks s
         inner join catalogs cat on s.product_id = cat.product_id 
         inner join (select distinct(a.product_id),a.price from prices a where from_date= (select max(from_date) 

@@ -38,28 +38,34 @@ class PosController extends Controller
             $itemsSold = [];
             foreach ($request->sales as $key => $item) {
                 $productId    = $item['product_id'];
+                $batchNo = $item['batch_no'];
                 $date = date('Y-m-d H:i:s');
 
-                if (array_key_exists($productId, $itemsSold)) {
-                    $noSold = $itemsSold[$productId];
+                if (array_key_exists($productId."::".$batchNo, $itemsSold)) {
+                    $noSold = $itemsSold[$productId."::".$batchNo];
                     $noSold += 1;
-                    $itemsSold[$productId] = $noSold;
+                    $itemsSold[$productId."::".$batchNo] = $noSold;
                 } else {
 
-                    $itemsSold[$productId] = 1;
+                    $itemsSold[$productId."::".$batchNo] = 1;
                 }
 
                 $stock = new Sale([
                     'product_id' => $productId,
+                    'batch_no'=> $batchNo,
                     'date_purchased' => $date
                 ]);
                 $stock->save();
             }
 
             foreach ($itemsSold as $key => $item) {
-                DB::select("      
+                $keys= explode("::",$key );
+                Log::info($keys);
+                Log::info($keys[0]);
+                Log::info($keys[1]);
+                DB::update("      
                     UPDATE stocks
-                    SET no_of_items  = no_of_items - $item  where product_id = '$key'
+                    SET no_of_items  = no_of_items - $item  where product_id = '$keys[0]' and batch_no = '$keys[1]'
                 ");
             }
 

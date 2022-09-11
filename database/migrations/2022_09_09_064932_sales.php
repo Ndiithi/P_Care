@@ -16,6 +16,7 @@ class Sales extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
             $table->string('product_id');
+            $table->string('batch_no');
             $table->date("date_purchased");
             $table->timestamps();
         });

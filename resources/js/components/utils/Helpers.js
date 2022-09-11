@@ -277,7 +277,8 @@ export async function getStocks() {
 export async function saveProduct(
     productId,
     expiryDate,
-    noOfItems
+    noOfItems,
+    batchNo
 ) {
     try {
         const response = await axios({
@@ -286,7 +287,8 @@ export async function saveProduct(
             data: {
                 productId: productId,
                 expiryDate: expiryDate,
-                noOfItems: noOfItems
+                noOfItems: noOfItems,
+                batchNo: batchNo
             }
         });
         return response;

@@ -34,7 +34,7 @@ class AddItem extends React.Component {
             let data = await getStocks();
 
             let catalogs = data.map((val) => {
-                return { value: val.product_id, label: val.name }
+                return { value: val.product_id+"-"+ val.batch_no, label: val.name+ "-"+ val.batch_no}
             });
             this.setState({
                 catalogs: catalogs,
@@ -50,7 +50,8 @@ class AddItem extends React.Component {
             this.state.data.forEach(
                 (catalog, index) => {
 
-                    if (catalog.product_id == this.state.selectedValue.value) {
+                    if (catalog.product_id+"-"+ catalog.batch_no == this.state.selectedValue.value
+                        ) {
 
                         totalPrice += catalog.price;
                         tableContent.push(catalog);
@@ -90,12 +91,14 @@ class AddItem extends React.Component {
             rows.push(<tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.name}</td>
+                <td>{row.batch_no}</td>
                 <td>{row.manufacturer}</td>
                 <td>{row.product_id}</td>
                 <td>{row.price}</td>
             </tr>);
         })
         rows.push(<tr key={uuidv4()}>
+            <td>{"--"}</td>
             <td>{"--"}</td>
             <td>{"--"}</td>
             <td>{"--"}</td>
@@ -145,6 +148,7 @@ class AddItem extends React.Component {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Batch No</th>
                             <th scope="col">Manufacturer</th>
                             <th scope="col">Product Id</th>
                             <th scope="col">Price</th>

@@ -12,7 +12,8 @@ class AddItem extends React.Component {
             selectedValue: {},
             productId: '',
             expiryDate: '',
-            noOfItems: ''
+            noOfItems: '',
+            batchNo: ''
         }
         this.getCatalogs = this.getCatalogs.bind(this);
         this.saveItem = this.saveItem.bind(this);
@@ -54,7 +55,8 @@ class AddItem extends React.Component {
             returnedData = await saveProduct(
                 prodId,
                 this.state.expiryDate,
-                this.state.noOfItems
+                this.state.noOfItems,
+                this.state.batchNo
             );
 
             if (returnedData) {
@@ -117,12 +119,25 @@ class AddItem extends React.Component {
                                                 Looks good!
                                             </div>
                                         </div>
+
+
                                         <div class="col-md-4 mb-3">
                                             <label for="validationCustomUsername">Expiry date</label>
                                             <input type="date" onChange={(event) => this.setState({
                                                 expiryDate: event.target.value
                                             })}
                                                 class="form-control" id="validationCustom02" required />
+                                            <div class="valid-feedback">
+                                                Looks good!
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4 mb-3">
+                                            <label for="validationCustom04">Batch No</label>
+                                            <input type="text" onChange={(event) => this.setState({
+                                                batchNo: event.target.value
+                                            })}
+                                                class="form-control" id="validationCustom04" required />
                                             <div class="valid-feedback">
                                                 Looks good!
                                             </div>
