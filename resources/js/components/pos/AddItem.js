@@ -3,7 +3,7 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import Select from 'react-select'
-import { getCatalogs, saveProduct } from '../utils/Helpers';
+import { getStocks, saveProduct, saveSales } from '../utils/Helpers';
 
 class AddItem extends React.Component {
 
@@ -15,22 +15,23 @@ class AddItem extends React.Component {
             data: [],
             selectedValue: {},
             tableContent: [],
-            totalPrice: 0
+            totalPrice: 0,
+            responseMessage: ""
         }
-        this.getCatalogs = this.getCatalogs.bind(this);
-        this.saveItem = this.saveItem.bind(this);
+        this.getStocks = this.getStocks.bind(this);
         this.addItemToTable = this.addItemToTable.bind(this);
+        this.checkOut = this.checkOut.bind(this);
 
     }
 
     componentDidMount() {
-        this.getCatalogs();
+        this.getStocks();
     }
 
-    getCatalogs() {
+    getStocks() {
         (async () => {
 
-            let data = await getCatalogs();
+            let data = await getStocks();
 
             let catalogs = data.map((val) => {
                 return { value: val.product_id, label: val.name }
@@ -42,46 +43,16 @@ class AddItem extends React.Component {
         })();
     }
 
-    saveItem() {
-
-        let returnedData = '';
-
-        let prodId = "";
-        try {
-            prodId = this.state.selectedValue.value
-        } catch (err) {
-
-        }
-
-        (async () => {
-            returnedData = await saveProduct(
-                prodId,
-                this.state.batchNumber,
-                this.state.expiryDate,
-                this.state.noOfItems
-            );
-
-            if (returnedData) {
-                this.setState({
-                    responseMessage: returnedData.data.Message
-                })
-                $('#saveModal').modal('toggle');
-                getCatalogs();
-            }
-        })();
-
-    }
-
     addItemToTable() {
         if (Object.keys(this.state.selectedValue).length != 0) {
             let tableContent = this.state.tableContent;
-            let totalPrice =this.state.totalPrice;
+            let totalPrice = this.state.totalPrice;
             this.state.data.forEach(
                 (catalog, index) => {
 
                     if (catalog.product_id == this.state.selectedValue.value) {
-                       
-                        totalPrice+=catalog.price;
+
+                        totalPrice += catalog.price;
                         tableContent.push(catalog);
                         // return;
                     }
@@ -94,11 +65,30 @@ class AddItem extends React.Component {
         }
     }
 
+    checkOut() {
+        let returnedData = '';
+        (async () => {
+            returnedData = await saveSales(
+                this.state.tableContent
+            );
+
+            if (returnedData) {
+                this.setState({
+                    responseMessage: returnedData.data.Message,
+                    tableContent: [],
+                    selectedValue: {},
+                    totalPrice: 0,
+                })
+                $('#saveModal').modal('toggle');
+            }
+        })();
+    }
+
     render() {
         let rows = [];
         this.state.tableContent.forEach((row, index) => {
             rows.push(<tr key={index}>
-                <td>{index+1}</td>
+                <td>{index + 1}</td>
                 <td>{row.name}</td>
                 <td>{row.manufacturer}</td>
                 <td>{row.product_id}</td>
@@ -166,8 +156,29 @@ class AddItem extends React.Component {
                     </tbody>
 
                 </table>
-                <button  className="btn btn-block btn-info">Checkout</button>
+                <button onClick={()=>this.checkOut()} className="btn btn-block btn-info">Checkout</button>
 
+
+                < div className="modal fade" id="saveModal" tabIndex="-1" role="dialog" aria-labelledby="saveModalTitle" aria-hidden="true" >
+                    <div className="modal-dialog modal-dialog-centered" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="saveModalTitle">Notice!</h5>
+                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div className="modal-body">
+                                {
+                                    this.state.responseMessage ? this.state.responseMessage : ''
+                                }
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div >
             </React.Fragment>
         );
     }

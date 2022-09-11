@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Stock;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class StockController extends Controller
@@ -35,5 +36,21 @@ class StockController extends Controller
         } catch (Exception $ex) {
             return ['Error' => '500', 'Message' => 'Could not save product ' . $ex->getMessage()];
         }
+    }
+
+
+    public function getStocks()
+    {
+
+        $stocks = DB::select("      
+        SELECT no_of_items, expiry_date, batch_number, s.product_id,cat.name, t2.price,
+        cat.manufacturer FROM stocks s
+        inner join catalogs cat on s.product_id = cat.product_id 
+        inner join (select distinct(a.product_id),a.price from prices a where from_date= (select max(from_date) 
+        from prices b where a.product_id=b.product_id)) as t2
+        on cat.product_id=t2.product_id
+        ");
+
+        return  $stocks;
     }
 }

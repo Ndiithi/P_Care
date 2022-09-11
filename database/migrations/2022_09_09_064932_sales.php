@@ -17,7 +17,6 @@ class Sales extends Migration
             $table->id();
             $table->string('product_id');
             $table->date("date_purchased");
-            $table->integer("quantity");
             $table->timestamps();
         });
     }

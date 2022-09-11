@@ -261,6 +261,18 @@ export async function getCatalogs() {
 
 }
 
+export async function getStocks() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/get_stocks`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}
 
 export async function saveProduct(
     productId,
@@ -284,3 +296,22 @@ export async function saveProduct(
         return err.response
     }
 }
+
+export async function saveSales(
+    salesItems
+) {
+    try {
+        const response = await axios({
+            method: 'put',
+            url: `${settings.rtcqiBaseApi}/save_sales`,
+            data: {
+                sales: salesItems
+            }
+        });
+        return response;
+    } catch (err) {
+        return err.response
+    }
+}
+
+
