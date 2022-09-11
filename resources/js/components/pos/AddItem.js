@@ -150,7 +150,7 @@ class AddItem extends React.Component {
 
                 <br />
 
-                <table className="table">
+                <table className="table table-striped table-dark">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -166,6 +166,7 @@ class AddItem extends React.Component {
                     </tbody>
 
                 </table>
+                <button  className="btn btn-block btn-info">Checkout</button>
 
             </React.Fragment>
         );

@@ -146,7 +146,7 @@ class Catalog extends React.Component {
                         className="form-control" placeholder="search catalog"></input>
                 </div>
 
-                <table className="table table-striped">
+                <table className="table table-striped table-dark">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
