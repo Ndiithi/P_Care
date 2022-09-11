@@ -52,6 +52,8 @@ class POS extends React.Component {
 
         return (
             <React.Fragment>
+                <h1 className="h4 mb-0 text-gray-500">POS</h1>
+                <br />
                 <NewItem />
                 <br />
             </React.Fragment>

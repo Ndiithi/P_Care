@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {  getCatalogs } from '../../utils/Helpers';
+import { getCatalogs } from '../../utils/Helpers';
 import Pagination from "react-js-pagination";
 import NewItem from './NewItem';
 
@@ -182,7 +182,9 @@ class Catalog extends React.Component {
 
         return (
             <React.Fragment>
-                <NewItem getCatalogs={this.getCatalogs}/>
+                <h1 className="h4 mb-0 text-gray-500">Catalog</h1>
+                <br />
+                <NewItem getCatalogs={this.getCatalogs} />
                 <hr />
                 <br />
                 {pageContent}
