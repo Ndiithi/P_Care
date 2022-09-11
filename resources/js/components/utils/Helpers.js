@@ -276,7 +276,6 @@ export async function getStocks() {
 
 export async function saveProduct(
     productId,
-    batchNumber,
     expiryDate,
     noOfItems
 ) {
@@ -286,7 +285,6 @@ export async function saveProduct(
             url: `${settings.rtcqiBaseApi}/save_product`,
             data: {
                 productId: productId,
-                batchNumber: batchNumber,
                 expiryDate: expiryDate,
                 noOfItems: noOfItems
             }

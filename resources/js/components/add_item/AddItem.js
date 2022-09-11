@@ -11,7 +11,6 @@ class AddItem extends React.Component {
             catalogs: [],
             selectedValue: {},
             productId: '',
-            batchNumber: '',
             expiryDate: '',
             noOfItems: ''
         }
@@ -54,7 +53,6 @@ class AddItem extends React.Component {
         (async () => {
             returnedData = await saveProduct(
                 prodId,
-                this.state.batchNumber,
                 this.state.expiryDate,
                 this.state.noOfItems
             );
@@ -130,18 +128,7 @@ class AddItem extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-6 mb-3">
-                                            <label for="validationCustom03">Batch Number</label>
-                                            <input onChange={(event) => this.setState({
-                                                batchNumber: event.target.value
-                                            })}
-                                                type="text" class="form-control" id="validationCustom03" required />
-                                            <div class="invalid-feedback">
-                                                Please provide a valid Batch Number.
-                                            </div>
-                                        </div>
-                                    </div>
+                                    
                                 </form>
 
                             </div>

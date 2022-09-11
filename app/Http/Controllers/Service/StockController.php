@@ -18,7 +18,6 @@ class StockController extends Controller
             Log::info("logging");
             $noOfItems = $request->noOfItems;
             $productId    = $request->productId;
-            $batchNumber = $request->batchNumber;
             $expiryDate = $request->expiryDate;
             $date = date('Y-m-d H:i:s');
 
@@ -26,7 +25,6 @@ class StockController extends Controller
             $stock = new Stock([
                 'no_of_items' => $noOfItems,
                 'product_id' => $productId,
-                'batch_number' => $batchNumber,
                 'expiry_date' => $expiryDate,
                 'date_purchased' => $date
             ]);
@@ -43,7 +41,7 @@ class StockController extends Controller
     {
 
         $stocks = DB::select("      
-        SELECT no_of_items, expiry_date, batch_number, s.product_id,cat.name, t2.price,
+        SELECT no_of_items, expiry_date, no_of_items, s.product_id,cat.name, t2.price,
         cat.manufacturer FROM stocks s
         inner join catalogs cat on s.product_id = cat.product_id 
         inner join (select distinct(a.product_id),a.price from prices a where from_date= (select max(from_date) 
