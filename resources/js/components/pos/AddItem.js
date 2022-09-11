@@ -14,7 +14,8 @@ class AddItem extends React.Component {
             catalogs: [],
             data: [],
             selectedValue: {},
-            tableContent: []
+            tableContent: [],
+            totalPrice: 0
         }
         this.getCatalogs = this.getCatalogs.bind(this);
         this.saveItem = this.saveItem.bind(this);
@@ -72,21 +73,23 @@ class AddItem extends React.Component {
     }
 
     addItemToTable() {
-        console.log("www");
         if (Object.keys(this.state.selectedValue).length != 0) {
             let tableContent = this.state.tableContent;
+            let totalPrice =this.state.totalPrice;
             this.state.data.forEach(
                 (catalog, index) => {
 
                     if (catalog.product_id == this.state.selectedValue.value) {
-
+                       
+                        totalPrice+=catalog.price;
                         tableContent.push(catalog);
                         // return;
                     }
                 }
             );
             this.setState({
-                tableContent: tableContent
+                tableContent: tableContent,
+                totalPrice: totalPrice
             });
         }
     }
@@ -94,7 +97,6 @@ class AddItem extends React.Component {
     render() {
         let rows = [];
         this.state.tableContent.forEach((row, index) => {
-            console.log(row.price)
             rows.push(<tr key={index}>
                 <td>{index+1}</td>
                 <td>{row.name}</td>
@@ -103,6 +105,13 @@ class AddItem extends React.Component {
                 <td>{row.price}</td>
             </tr>);
         })
+        rows.push(<tr key={uuidv4()}>
+            <td>{"--"}</td>
+            <td>{"--"}</td>
+            <td>{"--"}</td>
+            <td>{"TOTAL"}</td>
+            <td>{this.state.totalPrice}</td>
+        </tr>);
         return (
             <React.Fragment>
 
