@@ -39,10 +39,13 @@ Route::get('/users_details', 'Service\UsersController@getUsersDetails');
 
 Route::put('/save_catalog', 'Service\CatalogController@saveProduct');
 Route::get('/get_catalogs', 'Service\CatalogController@getProducts');
-
 Route::put('/save_product', 'Service\StockController@saveProduct');
 Route::get('/get_stocks', 'Service\StockController@getStocks');
-
 Route::put('/save_sales', 'Service\PosController@saveSales');
+
+
+Route::get('/get_sales', 'Reports\Sales@getSales');
+
+
 
 

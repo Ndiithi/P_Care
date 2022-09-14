@@ -48,7 +48,7 @@ class Miner extends React.Component {
 
 export default Miner;
 
-if (document.getElementById('sales')) {
+if (document.getElementById('mining')) {
     // find element by id
     let domValues = [];
     let domValuesMap = {};

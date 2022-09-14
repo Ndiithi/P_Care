@@ -48,7 +48,7 @@ class PurchasesReport extends React.Component {
 
 export default PurchasesReport;
 
-if (document.getElementById('sales')) {
+if (document.getElementById('purchases')) {
     // find element by id
     let domValues = [];
     let domValuesMap = {};

@@ -1,44 +1,151 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-
 import { v4 as uuidv4 } from 'uuid';
+import Pagination from "react-js-pagination";
 
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
+
+import { getSales } from '../../utils/Helpers';
 
 class SalesReport extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-           
+            tableData: [],
+            currTableEl: [],
+            allTableElements: [],
+            selectedCatalog: null,
+            allowedPermissions: [],
+            startTableData: 0,
+            endeTableData: 10,
+            activePage: 1,
         }
-      
+
+        this.getSales = this.getSales.bind(this);
 
     }
 
     componentDidMount() {
-        //fetch counties
+
+        this.getSales();
 
     }
 
-    componentDidMount() {
+    handlePageChange(pageNumber) {
+        //console.log(`active page is ${pageNumber}`);
+        let pgNumber = pageNumber * 10 + 1;
+        this.setState({
+            startTableData: pgNumber - 11,
+            endeTableData: pgNumber - 1,
+            activePage: pageNumber
+        });
+    }
+
+    getSales() {
         (async () => {
-            
 
+            let sales = await getSales();
+            console.log(sales);
+            this.setState({
+                tableData: sales,
+                allTableElements: []
+            });
         })();
-
-
     }
+
 
     render() {
 
-        
+
+        const imgStyle = {
+            width: "100%"
+        };
+
+        const rowStle = {
+            marginBottom: "5px"
+        };
+
+
+        let tableData = [];
+        if (this.state.tableData.length > 0) {
+            this.state.tableData.map((data, index) => {
+                tableData.push(<tr key={index}>
+                    <th scope="row">{index + 1}</th>
+                    <td>{data.name}</td>
+                    <td>{data.no_of_items}</td>
+                    <td>{data.date_purchased}</td>
+                    
+                </tr>
+                );
+            });
+            if (this.state.allTableElements.length == 0) {
+                this.setState({
+                    allTableElements: tableData,
+                    currTableEl: tableData
+                })
+            }
+
+        }
+
+
+        let pageContent = <div id='_table' className='row'>
+            <div className='col-sm-12 col-md-12'>
+                <div className="form-group mb-2">
+                    <input type="text"
+                        onChange={(event) => {
+                            console.log(this.state.allTableElements)
+                            let currTableEl = this.state.allTableElements.filter(
+                                element =>
+                                    element['props']['children'][1]['props']['children'][0].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) ||
+                                    element['props']['children'][2]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase())
+                            );
+
+
+                            this.setState({
+                                currTableEl: currTableEl,
+                                activePage: 1,
+                                startTableData: 0,
+                                endeTableData: 10,
+                            })
+
+                        }}
+                        className="form-control" placeholder="search catalog"></input>
+                </div>
+
+                <table className="table table-striped table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">No Of Items Sold</th>
+                            <th scope="col">Data Id</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.state.currTableEl.slice(this.state.startTableData, this.state.endeTableData)}
+                    </tbody>
+
+                </table>
+                <br />
+                <Pagination
+                    itemClass="page-item"
+                    linkClass="page-link"
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={this.state.currTableEl.length}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                />
+            </div>
+        </div>;
+
+
         return (
             <React.Fragment>
 
-                test
+                {pageContent}
+
 
             </React.Fragment>
         );
@@ -49,34 +156,5 @@ class SalesReport extends React.Component {
 export default SalesReport;
 
 if (document.getElementById('sales')) {
-    // find element by id
-    let domValues = [];
-    let domValuesMap = {};
-    const dataChart1 = document.getElementById('data-chart1');
-    const dataChart2 = document.getElementById('data-chart2');
-    const dataChart3 = document.getElementById('data-chart3');
-    const dataChart4 = document.getElementById('data-chart4');
-    const dataChart5 = document.getElementById('data-chart5');
-    const dataChart6 = document.getElementById('data-chart6');
-    const dataChart7 = document.getElementById('data-chart7');
-    const dataChart8 = document.getElementById('data-chart8');
-    // create new props object with element's data-attributes
-    // result: {chart1: "data"}
-    domValues.push(dataChart1.dataset);
-    domValues.push(dataChart2.dataset);
-    domValues.push(dataChart3.dataset);
-    domValues.push(dataChart4.dataset);
-    domValues.push(dataChart5.dataset);
-    domValues.push(dataChart6.dataset);
-    domValues.push(dataChart7.dataset);
-    domValues.push(dataChart8.dataset);
-    // domValues.push({'f':10})
-    domValues.forEach(element => {
-        for (const property in element) {
-            domValuesMap[property] = element[property];
-        }
-    });
-
-    const props = Object.assign({}, domValuesMap);
-    ReactDOM.render(<SalesReport {...props} />, document.getElementById('SalesReport'));
+    ReactDOM.render(<SalesReport />, document.getElementById('sales'));
 }

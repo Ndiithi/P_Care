@@ -315,3 +315,15 @@ export async function saveSales(
 }
 
 
+export async function getSales() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/get_sales`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}
