@@ -46,6 +46,7 @@ Route::put('/save_sales', 'Service\PosController@saveSales');
 
 Route::get('/get_sales', 'Reports\Sales@getSales');
 Route::get('/get_purchases', 'Reports\Purchases@getPurchase');
+Route::get('/getExpiry10_15', 'Reports\Stocks@getExpiry10_15');
 
 
 

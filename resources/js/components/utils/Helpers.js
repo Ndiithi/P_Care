@@ -340,3 +340,16 @@ export async function getPurchases() {
     }
 
 }
+
+export async function getExpiry10_15() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/getExpiry10_15`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}

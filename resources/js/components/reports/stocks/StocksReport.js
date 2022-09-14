@@ -6,15 +6,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
+import Expiry_10_15 from './Expiry_10_15';
 
 class StocksReport extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-           
+
         }
-      
+
 
     }
 
@@ -25,7 +26,7 @@ class StocksReport extends React.Component {
 
     componentDidMount() {
         (async () => {
-            
+
 
         })();
 
@@ -34,13 +35,46 @@ class StocksReport extends React.Component {
 
     render() {
 
-        
+
         return (
             <React.Fragment>
+                <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 className="h4 mb-0 text-gray-500">Expiry Report</h1>
+                </div>
 
-                test
+                <ul id="tabs" className="nav nav-tabs">
+                    <li className="nav-item" role="presentation">
+                        <a className="nav-link active" id="home-tab"
+                            data-toggle="tab" href="#home1" role="tab" aria-controls="home"
+                            aria-selected="true">
+                            Expiry btwn 10-15 days
+                        </a>
+                    </li>
+                    <li className="nav-item" role="presentation">
+                        <a className="nav-link" id="profile-tab"
+                            data-toggle="tab" href="#profile1" role="tab"
+                            aria-controls="profile"
+                            aria-selected="false">
+                            Expiry btwn 15-20 days</a>
+                    </li>
 
-            </React.Fragment>
+                </ul>
+                <br />
+                <div id="tabsContent" className="tab-content">
+                    <div id="home1"
+                        className="tab-pane fade active  show"  >
+                        <h6 className="text-left">Products expiring between 10-15 days</h6>
+                        <br />
+                        <Expiry_10_15 />
+                    </div>
+                    <div id="profile1"
+                        className="tab-pane fade" > {/* if add org permission not defined, edit is defined as this pop up shows in either or both defined*/}
+                        <h6 className="text-left">Products expiring between 15-20 days</h6>
+                        <br />
+                    </div>
+                </div>
+
+            </React.Fragment >
         );
     }
 
@@ -49,34 +83,5 @@ class StocksReport extends React.Component {
 export default StocksReport;
 
 if (document.getElementById('stocks')) {
-    // find element by id
-    let domValues = [];
-    let domValuesMap = {};
-    const dataChart1 = document.getElementById('data-chart1');
-    const dataChart2 = document.getElementById('data-chart2');
-    const dataChart3 = document.getElementById('data-chart3');
-    const dataChart4 = document.getElementById('data-chart4');
-    const dataChart5 = document.getElementById('data-chart5');
-    const dataChart6 = document.getElementById('data-chart6');
-    const dataChart7 = document.getElementById('data-chart7');
-    const dataChart8 = document.getElementById('data-chart8');
-    // create new props object with element's data-attributes
-    // result: {chart1: "data"}
-    domValues.push(dataChart1.dataset);
-    domValues.push(dataChart2.dataset);
-    domValues.push(dataChart3.dataset);
-    domValues.push(dataChart4.dataset);
-    domValues.push(dataChart5.dataset);
-    domValues.push(dataChart6.dataset);
-    domValues.push(dataChart7.dataset);
-    domValues.push(dataChart8.dataset);
-    // domValues.push({'f':10})
-    domValues.forEach(element => {
-        for (const property in element) {
-            domValuesMap[property] = element[property];
-        }
-    });
-
-    const props = Object.assign({}, domValuesMap);
-    ReactDOM.render(<StocksReport {...props} />, document.getElementById('StocksReport'));
+    ReactDOM.render(<StocksReport />, document.getElementById('stocks'));
 }
