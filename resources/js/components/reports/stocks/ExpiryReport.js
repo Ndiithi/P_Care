@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FetchAuthorities, SaveRole, UpdateRole, FetchUserAuthorities, SaveCatalog, getExpiry10_15 } from '../../utils/Helpers';
+import { FetchAuthorities, SaveRole, UpdateRole, FetchUserAuthorities, getExpiry15_20, getExpiry10_15 } from '../../utils/Helpers';
 import DualListBox from 'react-dual-listbox';
 import Pagination from "react-js-pagination";
 
 
-class Expiry_10_15 extends React.Component {
+class ExpiryReport extends React.Component {
 
 
     constructor(props) {
@@ -20,13 +20,13 @@ class Expiry_10_15 extends React.Component {
             activePage: 1,
         }
 
-        this.getExpiry10_15 = this.getExpiry10_15.bind(this);
+        this.getExpiryData = this.getExpiryData.bind(this);
 
     }
 
     componentDidMount() {
 
-        this.getExpiry10_15();
+        this.getExpiryData();
 
     }
 
@@ -40,10 +40,15 @@ class Expiry_10_15 extends React.Component {
         });
     }
 
-    getExpiry10_15() {
+    getExpiryData() {
         (async () => {
+            let data = [];
+            if (this.props.time == "10_15") {
+                data = await getExpiry10_15();
+            }else if(this.props.time =="15_20"){
+                data = await getExpiry15_20();
+            }
 
-            let data = await getExpiry10_15();
             this.setState({
                 tableData: data,
                 allTableElements: []
@@ -139,7 +144,7 @@ class Expiry_10_15 extends React.Component {
 
         return (
             <React.Fragment>
-               
+
                 {pageContent}
 
             </React.Fragment>
@@ -148,4 +153,4 @@ class Expiry_10_15 extends React.Component {
 
 }
 
-export default Expiry_10_15;
+export default ExpiryReport;

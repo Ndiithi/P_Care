@@ -353,3 +353,16 @@ export async function getExpiry10_15() {
     }
 
 }
+
+export async function getExpiry15_20() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/getExpiry15_20`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}

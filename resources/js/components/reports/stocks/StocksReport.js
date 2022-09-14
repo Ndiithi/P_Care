@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import Expiry_10_15 from './Expiry_10_15';
+import ExpiryReport from './ExpiryReport';
 
 class StocksReport extends React.Component {
 
@@ -65,12 +65,13 @@ class StocksReport extends React.Component {
                         className="tab-pane fade active  show"  >
                         <h6 className="text-left">Products expiring between 10-15 days</h6>
                         <br />
-                        <Expiry_10_15 />
+                        <ExpiryReport time={"10_15"}/>
                     </div>
                     <div id="profile1"
                         className="tab-pane fade" > {/* if add org permission not defined, edit is defined as this pop up shows in either or both defined*/}
                         <h6 className="text-left">Products expiring between 15-20 days</h6>
                         <br />
+                        <ExpiryReport time={"15_20"}/>
                     </div>
                 </div>
 

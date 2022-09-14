@@ -23,7 +23,7 @@ class Stocks extends Controller
         $this->expiryQuery = "select  sum(s.no_of_items) as  no_of_items,date(s.expiry_date) as expiry_date,  cat.name as name 
             from stocks s
             inner join catalogs cat on s.product_id = cat.product_id 
-            where DATEDIFF(expiry_date , CURDATE()) BETWEEN 10 AND 30
+            where DATEDIFF(expiry_date , CURDATE()) BETWEEN %d AND %d
             group by date(s.expiry_date),s.product_id, cat.name;";
     }
 
@@ -42,12 +42,25 @@ class Stocks extends Controller
 
     public function getExpiry10_15(Request $request)
     {
-
+        $query = sprintf($this->expiryQuery, 10, 15);
         try {
-            $sales = DB::select("      
-                 $this->expiryQuery
+            $stock = DB::select("      
+                $query 
             ");
 
+            return $stock;
+        } catch (Exception $ex) {
+            return ['Error' => '500', 'Message' => 'Error during retrieving data' . $ex->getMessage()];
+        }
+    }
+
+    public function getExpiry15_20(Request $request)
+    {
+        $query = sprintf($this->expiryQuery, 15, 20);
+        try {
+            $sales = DB::select("      
+            $query 
+            ");
             return $sales;
         } catch (Exception $ex) {
             return ['Error' => '500', 'Message' => 'Error during retrieving data' . $ex->getMessage()];
