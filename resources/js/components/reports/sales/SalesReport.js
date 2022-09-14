@@ -14,7 +14,6 @@ class SalesReport extends React.Component {
             tableData: [],
             currTableEl: [],
             allTableElements: [],
-            selectedCatalog: null,
             allowedPermissions: [],
             startTableData: 0,
             endeTableData: 10,
@@ -74,7 +73,7 @@ class SalesReport extends React.Component {
                     <td>{data.name}</td>
                     <td>{data.no_of_items}</td>
                     <td>{data.date_purchased}</td>
-                    
+
                 </tr>
                 );
             });
@@ -109,7 +108,7 @@ class SalesReport extends React.Component {
                             })
 
                         }}
-                        className="form-control" placeholder="search catalog"></input>
+                        className="form-control" placeholder="search"></input>
                 </div>
 
                 <table className="table table-striped table-dark">
@@ -119,7 +118,7 @@ class SalesReport extends React.Component {
                             <th scope="col">Name</th>
                             <th scope="col">No Of Items Sold</th>
                             <th scope="col">Data Id</th>
-                          
+
                         </tr>
                     </thead>
                     <tbody>
@@ -143,9 +142,10 @@ class SalesReport extends React.Component {
 
         return (
             <React.Fragment>
-
+                <div className="d-sm-flex align-items-center justify-content-between mb-4">
+                    <h1 className="h4 mb-0 text-gray-500">Sales Report</h1>
+                </div>
                 {pageContent}
-
 
             </React.Fragment>
         );
