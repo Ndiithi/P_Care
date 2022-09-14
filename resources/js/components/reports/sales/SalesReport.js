@@ -95,8 +95,10 @@ class SalesReport extends React.Component {
                             console.log(this.state.allTableElements)
                             let currTableEl = this.state.allTableElements.filter(
                                 element =>
-                                    element['props']['children'][1]['props']['children'][0].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) ||
-                                    element['props']['children'][2]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase())
+                                    element['props']['children'][1]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) ||
+                                    element['props']['children'][2]['props']['children']==event.target.value.trim() ||
+                                    element['props']['children'][3]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase())
+
                             );
 
 
