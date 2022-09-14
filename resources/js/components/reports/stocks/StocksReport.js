@@ -49,7 +49,7 @@ class StocksReport extends React.Component {
                             data-toggle="tab" href="#currentStock" role="tab"
                             aria-controls="home"
                             aria-selected="true">
-                            Expiry btwn 10-15 days
+                            Current Stocks
                         </a>
                     </li>
                     <li className="nav-item" role="presentation">
@@ -57,7 +57,7 @@ class StocksReport extends React.Component {
                             data-toggle="tab" href="#tab2" role="tab"
                             aria-controls="1015"
                             aria-selected="false">
-                            Expiry btwn 15-20 days</a>
+                            Expiry btwn 10-15 days</a>
                     </li>
                     <li className="nav-item" role="presentation">
                         <a className="nav-link" id="1520-tab"
@@ -73,7 +73,7 @@ class StocksReport extends React.Component {
 
                     <div id="currentStock"
                         className="tab-pane fade active  show"  >
-                        <h6 className="text-left">Current stock</h6>
+                        <h6 className="text-left">Current Stocks</h6>
                         <br />
                         <CurrentStock />
                     </div>
