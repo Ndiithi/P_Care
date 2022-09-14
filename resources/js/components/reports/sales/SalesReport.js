@@ -96,7 +96,7 @@ class SalesReport extends React.Component {
                             let currTableEl = this.state.allTableElements.filter(
                                 element =>
                                     element['props']['children'][1]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase()) ||
-                                    element['props']['children'][2]['props']['children']==event.target.value.trim() ||
+                                    element['props']['children'][2]['props']['children'] == event.target.value.trim() ||
                                     element['props']['children'][3]['props']['children'].toLowerCase().trim().includes(event.target.value.trim().toLowerCase())
 
                             );
@@ -119,7 +119,7 @@ class SalesReport extends React.Component {
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">No Of Items Sold</th>
-                            <th scope="col">Data Id</th>
+                            <th scope="col">Date</th>
 
                         </tr>
                     </thead>

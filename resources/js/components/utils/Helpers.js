@@ -327,3 +327,16 @@ export async function getSales() {
     }
 
 }
+
+export async function getPurchases() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/get_purchases`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}
