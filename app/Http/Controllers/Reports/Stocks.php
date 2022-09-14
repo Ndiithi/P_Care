@@ -58,10 +58,25 @@ class Stocks extends Controller
     {
         $query = sprintf($this->expiryQuery, 15, 20);
         try {
-            $sales = DB::select("      
+            $data = DB::select("      
             $query 
             ");
-            return $sales;
+            return $data;
+        } catch (Exception $ex) {
+            return ['Error' => '500', 'Message' => 'Error during retrieving data' . $ex->getMessage()];
+        }
+    }
+
+    public function getStock(Request $request)
+    {
+        try {
+            $data = DB::select("      
+            SELECT s.no_of_items, s.date_purchased, s.expiry_date, s.batch_no, cat.name 
+            FROM stocks s
+            inner join catalogs cat on s.product_id = cat.product_id 
+            where s.no_of_items>0
+            ");
+            return $data;
         } catch (Exception $ex) {
             return ['Error' => '500', 'Message' => 'Error during retrieving data' . $ex->getMessage()];
         }

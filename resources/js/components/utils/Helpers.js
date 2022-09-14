@@ -366,3 +366,16 @@ export async function getExpiry15_20() {
     }
 
 }
+
+export async function getCurrentStock() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/get_current_stock`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}

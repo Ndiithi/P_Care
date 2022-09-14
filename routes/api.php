@@ -48,6 +48,8 @@ Route::get('/get_sales', 'Reports\Sales@getSales');
 Route::get('/get_purchases', 'Reports\Purchases@getPurchase');
 Route::get('/getExpiry10_15', 'Reports\Stocks@getExpiry10_15');
 Route::get('/getExpiry15_20', 'Reports\Stocks@getExpiry15_20');
+Route::get('/get_current_stock', 'Reports\Stocks@getStock');
+
 
 
 
