@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Service;
 use App\Catalog;
 use App\Http\Controllers\Controller;
 use App\Price;
+use App\ProductGroup;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,12 @@ class CatalogController extends Controller
     {
         return view('interface/catalog/index');
     }
+
+    public function productGroupIndex()
+    {
+        return view('interface/product_group/index');
+    }
+    
 
     public function saveProduct(Request $request)
     {
@@ -85,5 +92,36 @@ class CatalogController extends Controller
         ");
 
         return  $catalogs;
+    }
+
+
+    public function saveProductGroup(Request $request)
+    {
+
+        try {
+
+            $name = $request->name;
+
+
+            $productGroup = new ProductGroup([
+                'name' => $name
+            ]);
+            $productGroup->save();
+
+
+            return response()->json(['Message' => 'Saved successfully'], 200);
+        } catch (Exception $ex) {
+            return ['Error' => '500', 'Message' => 'Could not Updated product group ' . $ex->getMessage()];
+        }
+    }
+
+    public function getProductGroup()
+    {
+
+        $groups = DB::select("      
+            select * from product_groups
+        ");
+
+        return  $groups;
     }
 }
