@@ -26,6 +26,7 @@ class Stocks extends Controller
             inner join catalogs cat on s.product_id = cat.product_id 
             inner join purchases pur on s.product_id = pur.product_id  and pur.batch_no=s.batch_no 
             where DATEDIFF(expiry_date , CURDATE()) BETWEEN %d AND %d
+            and s.no_of_items>0
             group by  cat.product_id, s.batch_no, pur.expiry_date, cat.name";
     }
 
