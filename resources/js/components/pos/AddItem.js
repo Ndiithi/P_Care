@@ -104,9 +104,7 @@ class AddItem extends React.Component {
                 this.setState({
                     responseMessage: returnedData.data.Message,
                     tableContent: [],
-                    selectedValue: {},
                     totalPrice: 0,
-                    quantity: 0
                 })
                 $('#saveModal').modal('toggle');
             }
