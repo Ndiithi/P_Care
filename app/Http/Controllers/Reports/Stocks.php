@@ -20,11 +20,13 @@ class Stocks extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->expiryQuery = "select  sum(s.no_of_items) as  no_of_items,date(s.expiry_date) as expiry_date,  cat.name as name 
-            from stocks s
+        $this->expiryQuery = 
+            "SELECT sum(s.no_of_items) no_of_items,  pur.expiry_date, s.batch_no, cat.name 
+            FROM stocks s
             inner join catalogs cat on s.product_id = cat.product_id 
+            inner join purchases pur on s.product_id = pur.product_id  and pur.batch_no=s.batch_no 
             where DATEDIFF(expiry_date , CURDATE()) BETWEEN %d AND %d
-            group by date(s.expiry_date),s.product_id, cat.name;";
+            group by  cat.product_id, s.batch_no, pur.expiry_date, cat.name";
     }
 
     /**
@@ -71,10 +73,12 @@ class Stocks extends Controller
     {
         try {
             $data = DB::select("      
-            SELECT s.no_of_items, s.date_purchased, s.expiry_date, s.batch_no, cat.name 
+            SELECT sum(s.no_of_items) no_of_items, pur.date_purchased, pur.expiry_date, s.batch_no, cat.name 
             FROM stocks s
             inner join catalogs cat on s.product_id = cat.product_id 
+            inner join purchases pur on s.product_id = pur.product_id  and pur.batch_no=s.batch_no 
             where s.no_of_items>0
+            group by pur.date_purchased, cat.product_id, s.batch_no, pur.expiry_date, cat.name 
             ");
             return $data;
         } catch (Exception $ex) {
