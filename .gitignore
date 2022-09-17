@@ -34,6 +34,6 @@ nbproject/
 # Local History for Visual Studio Code
 .history/
 
-storage/*.csv
+# storage/*.csv
 package-lock.json
 public/js/app.js
