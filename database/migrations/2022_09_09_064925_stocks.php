@@ -16,11 +16,10 @@ class Stocks extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->integer('no_of_items');
-            $table->date("date_purchased");
-            $table->date("expiry_date");
             $table->string("product_id");
             $table->string("batch_no");
             $table->timestamps();
+
         });
     }
 
