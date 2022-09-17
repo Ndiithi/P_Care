@@ -14,6 +14,7 @@ class AddItem extends React.Component {
             catalogs: [],
             data: [],
             selectedValue: {},
+            quantity: 0,
             tableContent: [],
             totalPrice: 0,
             responseMessage: ""
@@ -55,7 +56,7 @@ class AddItem extends React.Component {
 
                     if (catalog.product_id + "-" + catalog.batch_no == this.state.selectedValue.value
                     ) {
-
+                        catalog['quantity'] = this.state.quantity;
                         totalPrice += catalog.price;
                         tableContent.push(catalog);
                         //remove from list as all available items sold out
@@ -105,6 +106,7 @@ class AddItem extends React.Component {
                     tableContent: [],
                     selectedValue: {},
                     totalPrice: 0,
+                    quantity: 0
                 })
                 $('#saveModal').modal('toggle');
             }
@@ -117,6 +119,7 @@ class AddItem extends React.Component {
             rows.push(<tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.name}</td>
+                <td>{row.quantity}</td>
                 <td>{row.batch_no}</td>
                 <td>{row.manufacturer}</td>
                 <td>{row.product_id}</td>
@@ -124,6 +127,7 @@ class AddItem extends React.Component {
             </tr>);
         })
         rows.push(<tr key={uuidv4()}>
+            <td>{"--"}</td>
             <td>{"--"}</td>
             <td>{"--"}</td>
             <td>{"--"}</td>
@@ -136,7 +140,7 @@ class AddItem extends React.Component {
 
                 <form>
                     <div className="form-row">
-                        <div className="col-md-10 col-sm-10">
+                        <div className="col-md-8 col-sm-8">
                             <Select
                                 // value={this.state.selectedValue}
                                 onChange={(product) => {
@@ -148,6 +152,17 @@ class AddItem extends React.Component {
                                 }
                                 placeholder="Search Product"
                                 options={this.state.catalogs}
+                            />
+
+                        </div>
+                        <div className="col-md-2 col-sm-2">
+                            <input type="number" onChange={(event) => {
+                                this.setState({
+                                    quantity: event.target.value
+                                });
+                            }}
+                                class="form-control"
+                                placeholder='Quantity'
                             />
 
                         </div>
@@ -174,6 +189,7 @@ class AddItem extends React.Component {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Quantity</th>
                             <th scope="col">Batch No</th>
                             <th scope="col">Manufacturer</th>
                             <th scope="col">Product Id</th>
