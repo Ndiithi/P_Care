@@ -37,7 +37,7 @@ class CatalogController extends Controller
     {
         return view('interface/product_group/index');
     }
-    
+
 
     public function saveProduct(Request $request)
     {
@@ -56,6 +56,7 @@ class CatalogController extends Controller
             $manufacturer    = $request->manufacturer;
             $price = $request->price;
             $productID = $request->productID;
+            $productGroupID = $request->productGroupID;
             $date = date('Y-m-d H:i:s');
 
 
@@ -63,6 +64,7 @@ class CatalogController extends Controller
                 'product_id' => $productID,
                 'name' => $name,
                 'manufacturer' => $manufacturer,
+                'product_group_id' => $productGroupID
 
             ]);
             $catalog->save();
@@ -86,7 +88,8 @@ class CatalogController extends Controller
     {
 
         $catalogs = DB::select("      
-            select * from catalogs t1
+            select *, pg.name as group_name, t1.name as product_name from catalogs t1 
+            inner join product_groups pg on pg.id = t1.product_group_id
             inner join (select distinct(product_id),price from prices a where from_date= (select max(from_date) from prices b where a.product_id=b.product_id)) as t2
             on t1.product_id=t2.product_id
         ");
