@@ -92,6 +92,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define(SystemAuthorities::$authorities['view_pos'], function ($user) {
             return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_pos']);
         });
+        Gate::define(SystemAuthorities::$authorities['view_product_group'], function ($user) {
+            return $this->runAthurizationQuery(SystemAuthorities::$authorities['view_product_group']);
+        });
+        
     }
 
     private function runAthurizationQuery($authority)

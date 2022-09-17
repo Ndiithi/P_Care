@@ -31,6 +31,7 @@ class AuthoritiesSeed extends Seeder
             array('name' => 'view_datamining_module', 'group' => 'report', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
             array('name' => 'view_catalog', 'group' => 'system', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
             array('name' => 'view_pos', 'group' => 'system', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+            array('name' => 'view_product_group', 'group' => 'system', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
 
             
         );
