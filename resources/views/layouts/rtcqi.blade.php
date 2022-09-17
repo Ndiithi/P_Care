@@ -167,6 +167,9 @@ use Illuminate\Support\Facades\Gate;
                     <div id="collapsePages" class="collapse menu-body system-body" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                         <div class="bg-white py-2 collapse-inner rounded">
                             <h6 class="collapse-header">System settings</h6>
+                            <?php if (Gate::allows('view_product_group')) { ?>
+                                <a onclick="localStorage.setItem('page', 'ProductGroup');" class="collapse-item" href="{{ route('productGroupIndex') }}">Product Group</a>
+                            <?php } ?>
                             <?php if (Gate::allows('view_catalog')) { ?>
                                 <a onclick="localStorage.setItem('page', 'Catalog');" class="collapse-item" href="{{ route('catalogIndex') }}">Catalog</a>
                             <?php } ?>
@@ -408,7 +411,7 @@ use Illuminate\Support\Facades\Gate;
             body[0].classList.remove("show");
         }
 
-        if (page == 'Users' || page == 'Roles' || page == 'Catalog') {
+        if (page == 'Users' || page == 'Roles' || page == 'Catalog' || page=='ProductGroup') {
             let head = document.getElementsByClassName("system-head");
             head[0].classList.add("active");
             let body = document.getElementsByClassName("system-body");
@@ -419,6 +422,7 @@ use Illuminate\Support\Facades\Gate;
             let body = document.getElementsByClassName("system-body");
             body[0].classList.remove("show");
         }
+
 
         if (page == 'POS' ) {
             let head = document.getElementsByClassName("pos-head");
