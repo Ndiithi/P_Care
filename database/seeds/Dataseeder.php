@@ -45,25 +45,30 @@ class Dataseeder extends Seeder
         );
 
         $data = array();
-        foreach ($records as $data) {
+        $data2 = array();
+        foreach ($records as $record) {
+            $date = date_create($record['datum']);
+            $purchaseDate = date_format($date, "Y-m-d H:i:s");
             array_push(
                 $data,
-                array('product_id' => 'M01AB', 'date_purchased' => $data['datum'], 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime)
-                // array('product_id' => 'M01AB','date_purchased'=>$data->datum,'batch_no'=>'unknown' ,'created_at' => new \dateTime, 'updated_at' => new \dateTime),
-                // array('product_id' => 'M01AB','date_purchased'=>$data->datum,'batch_no'=>'unknown' ,'created_at' => new \dateTime, 'updated_at' => new \dateTime),
-                // array('product_id' => 'M01AB','date_purchased'=>$data->datum,'batch_no'=>'unknown' ,'created_at' => new \dateTime, 'updated_at' => new \dateTime),
-                // array('product_id' => 'M01AB','date_purchased'=>$data->datum,'batch_no'=>'unknown' ,'created_at' => new \dateTime, 'updated_at' => new \dateTime),
-                // array('product_id' => 'M01AB','date_purchased'=>$data->datum,'batch_no'=>'unknown' ,'created_at' => new \dateTime, 'updated_at' => new \dateTime),
-                // array('product_id' => 'M01AB','date_purchased'=>$data->datum,'batch_no'=>'unknown' ,'created_at' => new \dateTime, 'updated_at' => new \dateTime),
-                // array('product_id' => 'M01AB','date_purchased'=>$data->datum,'batch_no'=>'unknown' ,'created_at' => new \dateTime, 'updated_at' => new \dateTime)
-
+                array('product_id' => 'M01AB', 'quantity' => $record['M01AB'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+                array('product_id' => 'M01AE', 'quantity' => $record['M01AE'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+                array('product_id' => 'N02BA', 'quantity' => $record['N02BA'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+                array('product_id' => 'N02BE', 'quantity' => $record['N02BE'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+                array('product_id' => 'N05B', 'quantity' => $record['N05B'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
             );
-            // $data->array_push();
-
+            //seperate to have a smaller sql for inserts
+            array_push(
+                $data2,
+                array('product_id' => 'N05C', 'quantity' => $record['N05C'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+                array('product_id' => 'R03', 'quantity' => $record['R03'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime),
+                array('product_id' => 'R06', 'quantity' => $record['R06'], 'date_purchased' => $purchaseDate, 'batch_no' => 'unknown', 'created_at' => new \dateTime, 'updated_at' => new \dateTime)
+            );
         }
         $modelObj = new Sale();
         Sale::query()->truncate();
-      //  $modelObj->insert($data);
+        $modelObj->insert($data);
+        $modelObj->insert($data2);
 
         //import product groups
         $data = array(
