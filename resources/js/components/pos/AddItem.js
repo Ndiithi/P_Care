@@ -111,7 +111,6 @@ class AddItem extends React.Component {
         let rows = [];
         let totalPrice = 0;
         this.state.tableContent.forEach((row, index) => {
-            console.log(row)
             rows.push(<tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.name}</td>

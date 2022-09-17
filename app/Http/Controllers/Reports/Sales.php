@@ -41,7 +41,7 @@ class Sales extends Controller
 
         try {
             $sales = DB::select("      
-            select  count(s.product_id) as  no_of_items,date(s.date_purchased) as date_purchased,  cat.name  
+            select  sum(s.quantity) as  no_of_items,date(s.date_purchased) as date_purchased,  cat.name  
             from sales s
             inner join catalogs cat on s.product_id = cat.product_id 
             group by date(s.date_purchased),s.product_id, cat.name;
