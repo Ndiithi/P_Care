@@ -379,3 +379,35 @@ export async function getCurrentStock() {
     }
 
 }
+
+
+export async function saveProductGroup(
+    name
+) {
+    try {
+        const response = await axios({
+            method: 'put',
+            url: `${settings.rtcqiBaseApi}/save_product_group`,
+            data: {
+                name: name,
+            }
+        });
+        return response;
+    } catch (err) {
+        return err.response
+    }
+}
+
+export async function getProductGroup() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/get_product_group`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}
+
