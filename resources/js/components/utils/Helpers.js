@@ -229,7 +229,8 @@ export async function SaveCatalog(
     productName,
     manufacturer,
     price,
-    productID
+    productID,
+    productGroupID
 ) {
     try {
         const response = await axios({
@@ -239,7 +240,8 @@ export async function SaveCatalog(
                 name: productName,
                 manufacturer: manufacturer,
                 price: price,
-                productID: productID
+                productID: productID,
+                productGroupID: productGroupID
             }
         });
         return response;
