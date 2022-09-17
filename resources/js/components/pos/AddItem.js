@@ -52,19 +52,22 @@ class AddItem extends React.Component {
             this.state.data.forEach(
                 (catalog, index) => {
                     let cat = JSON.parse(JSON.stringify(catalog))
+
                     if (cat.product_id + "-" + cat.batch_no == this.state.selectedValue.value
                     ) {
+
+                        if (cat.no_of_items < this.state.quantity) {
+
+                            document.getElementById("message_modal").innerHTML = "Quantity higher than available number which is: " + cat.no_of_items;
+                            $('#saveModal').modal('toggle');
+                            return 0;
+                        }
+
                         cat['quantity'] = this.state.quantity;
                         tableContent.push(cat);
-                        //remove from list as all available items sold out
-                        if (cat.no_of_items <= 1) {
-                            data.splice(index, 1);
-                            showModal = true;
-                            responseMessage = "Item Out Of Stock";
-                        } else {
-                            cat.no_of_items = cat.no_of_items - 1;
-                            data[index] = cat;
-                        }
+                        cat.no_of_items = cat.no_of_items - this.state.quantity;
+                        data[index] = cat;
+
                         // return;
                     }
                 }
@@ -73,8 +76,6 @@ class AddItem extends React.Component {
             let catalogs = data.map((val) => {
                 return { value: val.product_id + "-" + val.batch_no, label: val.name + "-" + val.batch_no }
             });
-
-
 
             this.setState({
                 tableContent: tableContent,
@@ -118,9 +119,9 @@ class AddItem extends React.Component {
                 <td>{row.batch_no}</td>
                 <td>{row.manufacturer}</td>
                 <td>{row.product_id}</td>
-                <td>{row.price*row.quantity}</td>
+                <td>{row.price * row.quantity}</td>
             </tr>);
-            totalPrice+=row.quantity*row.price;
+            totalPrice += row.quantity * row.price;
         })
         rows.push(<tr key={uuidv4()}>
             <td>{"--"}</td>
@@ -157,6 +158,7 @@ class AddItem extends React.Component {
                                     quantity: event.target.value
                                 });
                             }}
+                                min="1"
                                 className="form-control"
                                 placeholder='Quantity'
                             />
@@ -210,7 +212,7 @@ class AddItem extends React.Component {
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div className="modal-body">
+                            <div id="message_modal" className="modal-body">
                                 {
                                     this.state.responseMessage ? this.state.responseMessage : ''
                                 }
