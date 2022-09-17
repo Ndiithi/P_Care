@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Service;
 
 use App\Http\Controllers\Controller;
+use App\Purchase;
 use App\Stock;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,19 +24,24 @@ class StockController extends Controller
 
             $date = date('Y-m-d H:i:s');
 
-
             $stock = Stock::where('product_id', '=', $productId)->where('batch_no', '=', $batchNo)->first();
             if ($stock === null) {
                 $stock = new Stock([
                     'no_of_items' => $noOfItems,
                     'product_id' => $productId,
-                    'expiry_date' => $expiryDate,
-                    'date_purchased' => $date,
-                    'batch_no'=>$batchNo
+                    'batch_no' => $batchNo
                 ]);
                 $stock->save();
+
+                $purchase = new Purchase([
+                    'no_of_items' => $noOfItems,
+                    'product_id' => $productId,
+                    'expiry_date' => $expiryDate,
+                    'date_purchased' => $date,
+                    'batch_no' => $batchNo
+                ]);
+                $purchase->save();
             } else {
-                
                 DB::update("      
                     UPDATE stocks
                     SET no_of_items  = no_of_items + $noOfItems  where product_id = '$productId' and batch_no = '$batchNo'
