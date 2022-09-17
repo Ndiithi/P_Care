@@ -18,6 +18,7 @@ class Catalog extends Migration
             $table->string('name');
             $table->string("manufacturer");
             $table->string("product_id");
+            $table->integer("product_group_id");
             $table->timestamps();
         });
     }

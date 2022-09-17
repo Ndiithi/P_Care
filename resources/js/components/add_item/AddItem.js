@@ -30,7 +30,7 @@ class AddItem extends React.Component {
             let data = await getCatalogs();
 
             let catalogs = data.map((val) => {
-                return { value: val.product_id, label: val.name }
+                return { value: val.product_id, label: val.product_name }
             });
             console.log(catalogs);
             this.setState({

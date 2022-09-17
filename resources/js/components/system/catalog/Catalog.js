@@ -69,7 +69,8 @@ class Catalog extends React.Component {
             this.state.catalogs.map((catalog, index) => {
                 catalogs.push(<tr key={index}>
                     <th scope="row">{index + 1}</th>
-                    <td>{catalog.name} {catalog.last_name}</td>
+                    <td>{catalog.product_name} </td>
+                    <td>{catalog.group_name} </td>
                     <td>{catalog.manufacturer}</td>
                     <td>{catalog.product_id}</td>
                     <td>{catalog.price}</td>
@@ -151,6 +152,7 @@ class Catalog extends React.Component {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
+                            <th scope="col">Product Group</th>
                             <th scope="col">Manufacturer</th>
                             <th scope="col">Product Id</th>
                             <th scope="col">Price</th>

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FetchAuthorities, SaveRole, UpdateRole, FetchUserAuthorities, SaveCatalog } from '../../utils/Helpers';
+import { getProductGroup, SaveCatalog } from '../../utils/Helpers';
 import DualListBox from 'react-dual-listbox';
 import Select from 'react-select'
 
@@ -14,7 +14,8 @@ class NewItem extends React.Component {
             productName: "",
             manufacturer: "",
             price: "",
-            productID: ""
+            productID: "",
+            productGroupID: ""
         };
         this.saveItem = this.saveItem.bind(this);
 
@@ -22,7 +23,17 @@ class NewItem extends React.Component {
 
     componentDidMount() {
 
+        (async () => {
 
+            let getGroups = await getProductGroup();
+            let groups = getGroups.map((val) => {
+                return { value: val.id, label: val.name }
+            });
+
+            this.setState({
+                productGroups: groups,
+            });
+        })();
     }
 
     saveItem() {
@@ -33,7 +44,8 @@ class NewItem extends React.Component {
                 this.state.productName,
                 this.state.manufacturer,
                 this.state.price,
-                this.state.productID
+                this.state.productID,
+                this.state.productGroupID
             );
 
             if (returnedData) {
@@ -93,15 +105,15 @@ class NewItem extends React.Component {
                             <label htmlFor="validationCustom01">Product Group</label>
                             <Select
                                 // value={this.state.selectedValue}
-                                // onChange={(product) => {
-                                //     this.setState({
-                                //         productID: product.value,
-                                //         selectedValue: product
-                                //     });
-                                // }
-                                // }
-                            // placeholder="Search group"
-                            // options={this.state.catalogs}
+                                onChange={(product) => {
+                                    this.setState({
+                                        productGroupID: product.value,
+                                        // selectedValue: product
+                                    });
+                                }
+                                }
+                                placeholder="Search group"
+                                options={this.state.productGroups}
                             />
 
                         </div>
