@@ -59,14 +59,16 @@ class StockController extends Controller
     {
 
         $stocks = DB::select("      
-        SELECT no_of_items, expiry_date, no_of_items, s.product_id,s.batch_no,cat.name, t2.price,
+        SELECT s.no_of_items, pur.expiry_date, s.product_id,s.batch_no,cat.name, t2.price,
         cat.manufacturer FROM stocks s
         inner join catalogs cat on s.product_id = cat.product_id 
+        inner join (select product_id, batch_no, expiry_date from purchases pur group by product_id, batch_no, expiry_date) pur on s.product_id = pur.product_id  and pur.batch_no=s.batch_no
         inner join (select distinct(a.product_id),a.price from prices a where from_date= (select max(from_date) 
         from prices b where a.product_id=b.product_id)) as t2
         on cat.product_id=t2.product_id
-        where no_of_items>0
+        where no_of_items>0        
         ");
+
 
         return  $stocks;
     }
