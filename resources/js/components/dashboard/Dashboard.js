@@ -132,7 +132,7 @@ class Dashboard extends React.Component {
                 </div>
 
 
-                <TopLabels serverData={this.state.odkData}/>
+                {/* <TopLabels serverData={this.state.odkData}/> */}
                 <hr/>
                 <DashMenu/>
             </React.Fragment>
