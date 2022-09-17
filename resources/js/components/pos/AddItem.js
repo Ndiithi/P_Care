@@ -16,7 +16,6 @@ class AddItem extends React.Component {
             selectedValue: {},
             quantity: 0,
             tableContent: [],
-            totalPrice: 0,
             responseMessage: ""
         }
         this.getStocks = this.getStocks.bind(this);
@@ -47,26 +46,24 @@ class AddItem extends React.Component {
     addItemToTable() {
         if (Object.keys(this.state.selectedValue).length != 0) {
             let tableContent = this.state.tableContent;
-            let totalPrice = this.state.totalPrice;
             let data = this.state.data;
             let showModal = false;
             let responseMessage = "";
             this.state.data.forEach(
                 (catalog, index) => {
-
-                    if (catalog.product_id + "-" + catalog.batch_no == this.state.selectedValue.value
+                    let cat = JSON.parse(JSON.stringify(catalog))
+                    if (cat.product_id + "-" + cat.batch_no == this.state.selectedValue.value
                     ) {
-                        catalog['quantity'] = this.state.quantity;
-                        totalPrice += catalog.price;
-                        tableContent.push(catalog);
+                        cat['quantity'] = this.state.quantity;
+                        tableContent.push(cat);
                         //remove from list as all available items sold out
-                        if (catalog.no_of_items <= 1) {
+                        if (cat.no_of_items <= 1) {
                             data.splice(index, 1);
                             showModal = true;
                             responseMessage = "Item Out Of Stock";
                         } else {
-                            catalog.no_of_items = catalog.no_of_items - 1;
-                            data[index] = catalog;
+                            cat.no_of_items = cat.no_of_items - 1;
+                            data[index] = cat;
                         }
                         // return;
                     }
@@ -81,7 +78,6 @@ class AddItem extends React.Component {
 
             this.setState({
                 tableContent: tableContent,
-                totalPrice: totalPrice,
                 data: data,
                 catalogs: catalogs,
                 responseMessage: responseMessage
@@ -104,7 +100,6 @@ class AddItem extends React.Component {
                 this.setState({
                     responseMessage: returnedData.data.Message,
                     tableContent: [],
-                    totalPrice: 0,
                 })
                 $('#saveModal').modal('toggle');
             }
@@ -113,7 +108,9 @@ class AddItem extends React.Component {
 
     render() {
         let rows = [];
+        let totalPrice = 0;
         this.state.tableContent.forEach((row, index) => {
+            console.log(row)
             rows.push(<tr key={index}>
                 <td>{index + 1}</td>
                 <td>{row.name}</td>
@@ -121,8 +118,9 @@ class AddItem extends React.Component {
                 <td>{row.batch_no}</td>
                 <td>{row.manufacturer}</td>
                 <td>{row.product_id}</td>
-                <td>{row.price}</td>
+                <td>{row.price*row.quantity}</td>
             </tr>);
+            totalPrice+=row.quantity*row.price;
         })
         rows.push(<tr key={uuidv4()}>
             <td>{"--"}</td>
@@ -131,7 +129,7 @@ class AddItem extends React.Component {
             <td>{"--"}</td>
             <td>{"--"}</td>
             <td>{"TOTAL"}</td>
-            <td>{this.state.totalPrice}</td>
+            <td>{totalPrice}</td>
         </tr>);
         return (
             <React.Fragment>
@@ -159,7 +157,7 @@ class AddItem extends React.Component {
                                     quantity: event.target.value
                                 });
                             }}
-                                class="form-control"
+                                className="form-control"
                                 placeholder='Quantity'
                             />
 
