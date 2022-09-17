@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { FetchAuthorities, SaveRole, UpdateRole, FetchUserAuthorities, SaveCatalog } from '../../utils/Helpers';
 import DualListBox from 'react-dual-listbox';
-
+import Select from 'react-select'
 
 class NewItem extends React.Component {
 
@@ -86,6 +86,24 @@ class NewItem extends React.Component {
                             <div className="valid-feedback">
                                 Looks good!
                             </div>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="col-md-3 mb-3">
+                            <label htmlFor="validationCustom01">Product Group</label>
+                            <Select
+                                // value={this.state.selectedValue}
+                                // onChange={(product) => {
+                                //     this.setState({
+                                //         productID: product.value,
+                                //         selectedValue: product
+                                //     });
+                                // }
+                                // }
+                            // placeholder="Search group"
+                            // options={this.state.catalogs}
+                            />
+
                         </div>
                     </div>
                     <div className="form-row">
