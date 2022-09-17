@@ -42,15 +42,6 @@ class PosController extends Controller
                 $batchNo = $item['batch_no'];
                 $date = date('Y-m-d H:i:s');
 
-                // if (array_key_exists($productId . "::" . $batchNo, $itemsSold)) {
-                //     $noSold = $itemsSold[$productId . "::" . $batchNo];
-                //     $noSold += 1;
-                //     $itemsSold[$productId . "::" . $batchNo] = $noSold;
-                // } else {
-
-                //     $itemsSold[$productId . "::" . $batchNo] = 1;
-                // }
-
                 $stock = new Sale([
                     'product_id' => $productId,
                     'batch_no' => $batchNo,
@@ -64,15 +55,6 @@ class PosController extends Controller
                 SET no_of_items  = no_of_items - $quantity  where product_id = '$productId' and batch_no = '$batchNo'
             ");
             }
-
-            // foreach ($itemsSold as $key => $item) {
-            //     $keys = explode("::", $key);
-
-            //     DB::update("      
-            //         UPDATE stocks
-            //         SET no_of_items  = no_of_items - $item  where product_id = '$keys[0]' and batch_no = '$keys[1]'
-            //     ");
-            // }
 
             return response()->json(['Message' => 'Saved successfully'], 200);
         } catch (Exception $ex) {

@@ -365,10 +365,9 @@ use Illuminate\Support\Facades\Gate;
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Pharma &copy; 2022, <script>
+                        <span>Pharma &copy; <script>
                                 document.write(new Date().getFullYear());
                             </script></span>
-                        | <a href="#">HELP DESK</a>
                     </div>
                 </div>
             </footer>
