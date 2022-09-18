@@ -49,6 +49,14 @@ class AddItem extends React.Component {
             let data = this.state.data;
             let showModal = false;
             let responseMessage = "";
+
+            if (this.state.quantity==0) {
+
+                document.getElementById("message_modal").innerHTML = "Quantity not filled";
+                $('#saveModal').modal('toggle');
+                return 0;
+            }
+
             this.state.data.forEach(
                 (catalog, index) => {
                     let cat = JSON.parse(JSON.stringify(catalog))
