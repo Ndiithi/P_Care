@@ -50,7 +50,7 @@ class AddItem extends React.Component {
             let showModal = false;
             let responseMessage = "";
 
-            if (this.state.quantity==0) {
+            if (this.state.quantity == 0) {
 
                 document.getElementById("message_modal").innerHTML = "Quantity not filled";
                 $('#saveModal').modal('toggle');

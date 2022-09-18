@@ -33,7 +33,9 @@ class PosController extends Controller
 
     public function saveSales(Request $request)
     {
-
+        if(sizeof($request->sales)==0){
+            return response()->json(['Message' => 'No data for saving'], 200);
+        }
         try {
             // $itemsSold = [];
             foreach ($request->sales as $key => $item) {
