@@ -1,11 +1,14 @@
 version: "3.7"
 services:
+  
   db:
-    image: "mariadb:10.3"
     container_name: app-db
     restart: unless-stopped
     ports:
      - "3334:3306"
+    build:
+      context: ./
+      dockerfile: docker-compose/mysql/Dockerfile
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -15,10 +18,13 @@ services:
       SERVICE_NAME: mysql
     volumes:
       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    # networks:
+    #   - towers
 
   app:
     build:
       args:
+        user: duncan
         uid: 1000
       context: ./
       dockerfile: Dockerfile
@@ -28,7 +34,9 @@ services:
     working_dir: /var/www/
     volumes:
       - ./:/var/www
-   
+    # networks:
+    #   - towers
+  
   nginx:
     container_name: app-nginx
     restart: unless-stopped
@@ -40,4 +48,9 @@ services:
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx/:/etc/nginx/conf.d/
-   
+    # networks:
+    #   - towers
+
+# networks:
+#   towers:
+#     driver: bridge
