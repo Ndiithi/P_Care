@@ -413,3 +413,15 @@ export async function getProductGroup() {
 
 }
 
+export async function predict() {
+
+    try {
+        const response = await axios.get(`${settings.rtcqiBaseApi}/predict`);
+        const data = response.data;
+        return data;
+    } catch (err) {
+        // Handle Error Here
+        return err.response
+    }
+
+}
