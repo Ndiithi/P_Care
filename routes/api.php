@@ -52,7 +52,7 @@ Route::get('/getExpiry10_15', 'Reports\Stocks@getExpiry10_15');
 Route::get('/getExpiry15_20', 'Reports\Stocks@getExpiry15_20');
 Route::get('/get_current_stock', 'Reports\Stocks@getStock');
 
-
+Route::get('/predict', 'Mining\Miner@predict');
 
 
 
