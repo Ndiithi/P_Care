@@ -2,10 +2,14 @@ version: "3.7"
 services:
   db:
     image: "mariadb:10.3"
+    hostname: db
     container_name: app-db
     restart: unless-stopped
     ports:
      - "3334:3306"
+    build:
+      context: ./
+      # dockerfile: docker-compose/mysql/Dockerfile
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -22,6 +26,7 @@ services:
         uid: 1000
       context: ./
       dockerfile: Dockerfile
+    image: towers
     container_name: app-app
     restart: unless-stopped
     working_dir: /var/www/
@@ -41,13 +46,15 @@ services:
       - ./docker-compose/nginx/:/etc/nginx/conf.d/
 
   miner:
+    image: "python:3.6"
     container_name: app-miner
     restart: on-failure
     ports:
     - 5000:5000
-    build:
-        context: ./
-        dockerfile: docker-compose/miner/Dockerfile
-    volumes:
-      - ./docker-compose/miner/:/opt
+    # build:
+    #     context: ./
+    #     dockerfile: docker-compose/miner/Dockerfile
+    # volumes:
+    #   - ./docker-compose/miner/:/opt
+      
    

@@ -1,5 +1,5 @@
-FROM mysql:5.7-debian
-
+FROM mariadb:10.5
+# FROM mysql:5.7-debian
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     git \

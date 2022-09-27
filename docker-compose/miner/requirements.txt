@@ -1,0 +1,8 @@
+Flask
+prophet
+matplotlib
+pmdarima
+mysql-connector-python
+numpy
+pandas
+
