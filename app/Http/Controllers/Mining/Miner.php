@@ -7,6 +7,9 @@ use App\Services\SystemAuthorities;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+
 class Miner extends Controller
 {
     /**
@@ -30,5 +33,10 @@ class Miner extends Controller
             return response()->json(['Message' => 'Not allowed to view miner module: '], 500);
         }
         return view('interface/mining/index');
+    }
+
+    public function predict(Request $request){
+        $response = Http::get('http://miner:5000/forecast/M01AB/?periodspan=10&model=arima');
+        return $response;
     }
 }
