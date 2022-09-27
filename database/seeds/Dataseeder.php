@@ -19,7 +19,7 @@ class Dataseeder extends Seeder
      */
     public function run()
     {
-        $fileName = "salesdaily.csv";
+        $fileName = "salesmonthly.csv";
         $contents = Storage::disk('local')->get($fileName);
         Log::info("start importing");
         $csv = Reader::createFromString($contents);
