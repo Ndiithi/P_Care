@@ -36,7 +36,7 @@ class Miner extends Controller
     }
 
     public function predict(Request $request){
-        $response = Http::get('http://miner:5000/forecast/M01AB/?periodspan=10&model=arima');
+        $response = Http::get("http://miner:5000/forecast/$request->product_id/?periodspan=$request->periodspan&model=$request->model");
         return $response;
     }
 }

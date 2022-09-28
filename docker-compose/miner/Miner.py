@@ -18,7 +18,7 @@ def miner(product_id):
 
     # the number of dependent values to be generated based on periodtype (give prediction data to which time)
     periodspan = int(request.args.get('periodspan'))
-    periodtype = request.args.get('periodtype')  # can yealy 'Y' or monthly 'M'
+    # periodtype = request.args.get('periodtype')  # can yealy 'Y' or monthly 'M'
     model = request.args.get('model')
     print("modelling")
     if (model == 'arima'):
