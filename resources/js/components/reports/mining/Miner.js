@@ -6,41 +6,125 @@ import { v4 as uuidv4 } from 'uuid';
 
 import jsPDF from 'jspdf'
 import 'jspdf-autotable'
-import { predict } from '../../utils/Helpers';
+import Select from 'react-select'
+import { predict, getCatalogs } from '../../utils/Helpers';
+import BlockUi from 'react-block-ui';
+import 'react-block-ui/style.css';
 
 class Miner extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            
+            catalogs: [],
+            predict_data: [],
+            productID: 'N02BA',
+            selectedProductValue: [],
+            periodspan: 15,
+            model: 'prophet',
+            blocking: true
         }
-
+        this.getPrediction = this.getPrediction.bind(this);
+        this.getCatalogs = this.getCatalogs.bind(this);
     }
 
     componentDidMount() {
         (async () => {
-
-            let data = await predict();
-            console.log(data);
-            // this.setState({
-            //     tableData: sales,
-            //     allTableElements: []
-            // });
+            this.getCatalogs();
+            let predict_data = await predict(this.state.productID, this.state.periodspan, this.state.model);
+            this.setState({
+                predict_data: predict_data,
+                blocking: false
+            });
         })();
 
     }
 
- 
+
+
+    getCatalogs() {
+        (async () => {
+            let stock_data = await getCatalogs();
+            let catalogs = stock_data.map((val) => {
+                return { value: val.product_id, label: val.product_name }
+            });
+            this.setState({
+                catalogs: catalogs,
+            });
+        })();
+    }
+
+    getPrediction(model, productID, periodspan) {
+        this.setState({
+            blocking: true
+        })
+            (async () => {
+                let predict_data = await predict(productID, periodspan, model);
+                this.setState({
+                    predict_data: predict_data,
+                    productID: productID,
+                    periodspan: periodspan,
+                    model: model,
+                    blocking: false
+                });
+            })();
+    }
+
     render() {
 
 
         return (
-            <React.Fragment>
+            <BlockUi tag="div" blocking={this.state.blocking} message="Running predictor model, please wait">
 
-                test 2
+                <form>
+                    <div className="form-row">
+                        <div className="col-md-6 col-sm-6">
+                            <Select
+                                // value={this.state.selectedValue}
+                                onChange={(product) => {
 
-            </React.Fragment>
+                                    this.getPrediction(this.state.model, product.value, this.state.periodspan);
+                                }
+                                }
+                                placeholder="Search Product"
+                                options={this.state.catalogs}
+                            />
+
+                        </div>
+
+                        <div className="col-md-3 col-sm-3">
+                            <Select
+                                // value={this.state.selectedValue}
+                                onChange={(model) => {
+                                    this.getPrediction(model.value, this.state.productID, this.state.periodspan);
+                                }
+                                }
+                                placeholder="Select Model"
+                                options={
+                                    [
+                                        { value: 'arima', label: "Arima" },
+                                        { value: 'prophet', label: "Prophet" }]
+                                }
+                            />
+
+                        </div>
+
+                        <div className="col-md-3 col-sm-3">
+                            <input type="number" onChange={(event) => {
+                                this.getPrediction(this.state.model, this.state.productID, event.target.value);
+                            }}
+                                min="1"
+                                className="form-control"
+                                placeholder='period length'
+                            />
+
+                        </div>
+
+                    </div>
+                </form>
+
+                <br />
+            </BlockUi>
         );
     }
 
