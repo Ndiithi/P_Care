@@ -53,26 +53,28 @@ class Miner extends React.Component {
     }
 
     getPrediction(model, productID, periodspan) {
+        // this.setState({
+        //     blocking: true
+        // })
+        (async () => {
+            let predict_data = await predict(productID, periodspan, model);
+            this.setState({
+                predict_data: model == 'arima' ? JSON.parse(predict_data) : predict_data,
+                productID: productID,
+                periodspan: periodspan,
+                model: model,
+                blocking: false
+            });
+        })();
         this.setState({
             blocking: true
         })
-            (async () => {
-                let predict_data = await predict(productID, periodspan, model);
-                this.setState({
-                    predict_data: model == 'arima' ? JSON.parse(predict_data) : predict_data,
-                    productID: productID,
-                    periodspan: periodspan,
-                    model: model,
-                    blocking: false
-                });
-            })();
     }
 
     render() {
 
         let tableData = [];
-        console.log("the data is")
-        console.log(this.state.predict_data)
+
         try {
             if (this.state.model == 'arima') {
                 tableData = this.state.predict_data
@@ -85,8 +87,8 @@ class Miner extends React.Component {
         }
         let tabl = <ArimaTable
             product={this.state.productID}
-            tableData={tableData} 
-            model= {this.state.model}/>
+            tableData={tableData}
+            model={this.state.model} />
 
         return (
             <BlockUi tag="div" blocking={this.state.blocking} message="Running predictor model, please wait">
