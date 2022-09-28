@@ -22,7 +22,7 @@ class Miner extends React.Component {
             productID: 'N02BA',
             selectedProductValue: [],
             periodspan: 15,
-            model: 'arima',
+            model: 'prophet',
             blocking: true,
         }
         this.getPrediction = this.getPrediction.bind(this);
@@ -34,7 +34,7 @@ class Miner extends React.Component {
             this.getCatalogs();
             let predict_data = await predict(this.state.productID, this.state.periodspan, this.state.model);
             this.setState({
-                predict_data: predict_data,
+                predict_data: this.state.model == 'arima' ? JSON.parse(predict_data) : predict_data,
                 blocking: false
             });
         })();
@@ -59,7 +59,7 @@ class Miner extends React.Component {
             (async () => {
                 let predict_data = await predict(productID, periodspan, model);
                 this.setState({
-                    predict_data: predict_data,
+                    predict_data: model == 'arima' ? JSON.parse(predict_data) : predict_data,
                     productID: productID,
                     periodspan: periodspan,
                     model: model,
@@ -70,6 +70,23 @@ class Miner extends React.Component {
 
     render() {
 
+        let tableData = [];
+        console.log("the data is")
+        console.log(this.state.predict_data)
+        try {
+            if (this.state.model == 'arima') {
+                tableData = this.state.predict_data
+            } else {
+                tableData = this.state.predict_data['projection']
+            }
+
+        } catch (err) {
+
+        }
+        let tabl = <ArimaTable
+            product={this.state.productID}
+            tableData={tableData} 
+            model= {this.state.model}/>
 
         return (
             <BlockUi tag="div" blocking={this.state.blocking} message="Running predictor model, please wait">
@@ -123,9 +140,7 @@ class Miner extends React.Component {
 
                 <br />
                 {
-                    this.state.model == 'arima' ?
-                        <ArimaTable product={this.state.productID} tableData={this.state.predict_data} /> :
-                        ""
+                    tabl
                 }
 
             </BlockUi>

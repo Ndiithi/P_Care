@@ -48,14 +48,23 @@ class ArimaTable extends React.Component {
 
         let tableData = [];
 
-        if (this.props.tableData.length > 0) {
+        if (this.props.tableData != undefined && this.props.tableData.length > 0) {
+
             this.props.tableData.map((data, index) => {
                 if (index != 0) {
-                    let date = new Date(data.time);
-                    let year = date.toLocaleString("default", { year: "numeric" });
-                    let month = date.toLocaleString("default", { month: "2-digit" });
-                    let day = date.toLocaleString("default", { day: "2-digit" });
-                    let formattedDate = day + "-" + month + "-" + year;
+                    let formattedDate = data.time
+                    if (this.props.model == 'arima') {
+                        let date = new Date(data.time);
+                        let year = date.toLocaleString("default", { year: "numeric" });
+                        let month = date.toLocaleString("default", { month: "2-digit" });
+                        let day = date.toLocaleString("default", { day: "2-digit" });
+                        formattedDate = day + "-" + month + "-" + year;
+                    } else {
+                        let d = new Date(data.time);
+                        let month = d.getMonth();
+                        let year = d.getFullYear();
+                        formattedDate = data.time.substring(4,6) +"-"+ data.time.substring(0,4);
+                    }
 
                     tableData.push(<tr key={index}>
                         <th scope="row">{index}</th>

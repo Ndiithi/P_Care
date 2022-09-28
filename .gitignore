@@ -37,3 +37,5 @@ nbproject/
 # storage/*.csv
 package-lock.json
 public/js/app.js
+
+*.pyc
