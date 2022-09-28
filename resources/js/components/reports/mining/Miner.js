@@ -10,6 +10,7 @@ import Select from 'react-select'
 import { predict, getCatalogs } from '../../utils/Helpers';
 import BlockUi from 'react-block-ui';
 import 'react-block-ui/style.css';
+import ArimaTable from './ArimaTable';
 
 class Miner extends React.Component {
 
@@ -21,8 +22,8 @@ class Miner extends React.Component {
             productID: 'N02BA',
             selectedProductValue: [],
             periodspan: 15,
-            model: 'prophet',
-            blocking: true
+            model: 'arima',
+            blocking: true,
         }
         this.getPrediction = this.getPrediction.bind(this);
         this.getCatalogs = this.getCatalogs.bind(this);
@@ -37,10 +38,7 @@ class Miner extends React.Component {
                 blocking: false
             });
         })();
-
     }
-
-
 
     getCatalogs() {
         (async () => {
@@ -124,6 +122,12 @@ class Miner extends React.Component {
                 </form>
 
                 <br />
+                {
+                    this.state.model == 'arima' ?
+                        <ArimaTable product={this.state.productID} tableData={this.state.predict_data} /> :
+                        ""
+                }
+
             </BlockUi>
         );
     }
