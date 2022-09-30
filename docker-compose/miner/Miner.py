@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pmdarima import auto_arima
 from Prophet import p_predict
-
+from flask import jsonify
 from flask import Flask
 from flask import request
 from db import database
@@ -54,12 +54,14 @@ def predict(product_id, periodspan):
 
     projection = []
     for index, row in forecast.iterrows():
+        print (index)
         try:
-            _projection = {}
-            _projection["time"] = index
-            _projection["value"] = row['quantity']
-            projection.append(_projection)
+            if(row['quantity']==row['quantity']): #check for NANs
+                _projection = {}
+                _projection["time"] = index
+                _projection["value"] = row['quantity']
+                projection.append(_projection)
         except Exception as e:
             print(e)
 
-    return projection
+    return jsonify(projection)

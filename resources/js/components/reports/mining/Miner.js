@@ -22,7 +22,7 @@ class Miner extends React.Component {
             productID: 'N02BA',
             selectedProductValue: [],
             periodspan: 15,
-            model: 'prophet',
+            model: 'arima',
             blocking: true,
         }
         this.getPrediction = this.getPrediction.bind(this);
@@ -33,10 +33,11 @@ class Miner extends React.Component {
         (async () => {
             this.getCatalogs();
             let predict_data = await predict(this.state.productID, this.state.periodspan, this.state.model);
+
             this.setState({
-                predict_data: this.state.model == 'arima' ? JSON.parse(predict_data) : predict_data,
+                predict_data: predict_data,
                 blocking: false
-            });
+            })
         })();
     }
 
@@ -58,13 +59,16 @@ class Miner extends React.Component {
         // })
         (async () => {
             let predict_data = await predict(productID, periodspan, model);
+
             this.setState({
-                predict_data: model == 'arima' ? JSON.parse(predict_data) : predict_data,
+                predict_data: predict_data,
                 productID: productID,
                 periodspan: periodspan,
                 model: model,
                 blocking: false
             });
+
+
         })();
         this.setState({
             blocking: true
@@ -72,18 +76,22 @@ class Miner extends React.Component {
     }
 
     render() {
-
+        console.log("the data from props is 0n3");
+        console.log(this.state.predict_data);
         let tableData = [];
 
         try {
             if (this.state.model == 'arima') {
+
                 tableData = this.state.predict_data
+
+
             } else {
                 tableData = this.state.predict_data['projection']
             }
 
         } catch (err) {
-
+            console.log(err);
         }
         let tabl = <ArimaTable
             product={this.state.productID}

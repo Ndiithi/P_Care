@@ -26,6 +26,21 @@ class ArimaTable extends React.Component {
 
 
     }
+
+    componentDidUpdate(prevProps) {
+        if (
+            this.props.tableData != prevProps.tableData
+            ||
+            this.props.product != prevProps.product
+            ||
+            this.props.model != prevProps.model
+        ) {
+            this.setState({
+                tableData: this.props.tableData
+            })
+        }
+    }
+
     handlePageChange(pageNumber) {
         //console.log(`active page is ${pageNumber}`);
         let pgNumber = pageNumber * 10 + 1;
@@ -49,8 +64,16 @@ class ArimaTable extends React.Component {
         let tableData = [];
 
         if (this.props.tableData != undefined && this.props.tableData.length > 0) {
+            let projection_data = [];
+            console.log("the data from props is");
+            console.log(this.props.tableData);
+            if (this.props.model == 'prophet') {
+                projection_data = this.props.tableData;
+            } else {
+                projection_data = this.props.tableData;
+            }
 
-            this.props.tableData.map((data, index) => {
+            projection_data.map((data, index) => {
                 if (index != 0) {
                     let formattedDate = data.time
                     if (this.props.model == 'arima') {
@@ -63,7 +86,7 @@ class ArimaTable extends React.Component {
                         let d = new Date(data.time);
                         let month = d.getMonth();
                         let year = d.getFullYear();
-                        formattedDate = data.time.substring(4,6) +"-"+ data.time.substring(0,4);
+                        formattedDate = data.time.substring(4, 6) + "-" + data.time.substring(0, 4);
                     }
 
                     tableData.push(<tr key={index}>
