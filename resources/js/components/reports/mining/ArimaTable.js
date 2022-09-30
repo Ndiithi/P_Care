@@ -36,7 +36,8 @@ class ArimaTable extends React.Component {
             this.props.model != prevProps.model
         ) {
             this.setState({
-                tableData: this.props.tableData
+                tableData: this.props.tableData,
+                allTableElements: []
             })
         }
     }
