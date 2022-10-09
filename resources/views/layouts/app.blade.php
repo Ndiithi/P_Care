@@ -25,8 +25,8 @@
         <nav class="navbar navbar-expand-md navbar-light bg-blue shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{URL('/images/coat.png')}}" width="30" height="30" alt="">
-                    {{ config('app.name', 'Pharma') }}
+                    <img src="{{URL('/images/favicon/favicon-32x32.png')}}" width="30" height="30" alt="">
+                    {{ config('app.name', 'Olga Pharma') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

@@ -44,7 +44,7 @@ use Illuminate\Support\Facades\Gate;
                 <div class="sidebar-brand-icon">
                     <img style="max-width: 80%" src="{{URL('/images/coat.png')}}" alt="">
                 </div>
-                <div style="margin-left: 0px !important" class="sidebar-brand-text mx-3">Pharma</div>
+                <div style="margin-left: 0px !important" class="sidebar-brand-text mx-3">Olga Pharma</div>
             </a>
 
 
@@ -365,7 +365,7 @@ use Illuminate\Support\Facades\Gate;
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Pharma &copy; <script>
+                        <span>Olga Pharma &copy; <script>
                                 document.write(new Date().getFullYear());
                             </script></span>
                     </div>
