@@ -167,11 +167,13 @@ class ArimaTable extends React.Component {
 
         return (
             <React.Fragment>
-                {pageContent}
                 <LineChart chartData={chartData} 
                 product = {this.props.product} 
                 chartDate={chartDate} 
                 periodspan={this.props.periodspan}/>
+                <br/>
+                {pageContent}
+                
             </React.Fragment>
         );
     }
