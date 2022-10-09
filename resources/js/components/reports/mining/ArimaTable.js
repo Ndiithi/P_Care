@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import { v4 as uuidv4 } from 'uuid';
 
 import 'jspdf-autotable'
+import LineChart from './LineChart';
 
 class ArimaTable extends React.Component {
 
@@ -63,11 +64,11 @@ class ArimaTable extends React.Component {
         };
 
         let tableData = [];
-
+        let chartData = [];
+        let chartDate = [];
         if (this.props.tableData != undefined && this.props.tableData.length > 0) {
             let projection_data = [];
-            console.log("the data from props is");
-            console.log(this.props.tableData);
+
             if (this.props.model == 'prophet') {
                 projection_data = this.props.tableData;
             } else {
@@ -88,6 +89,9 @@ class ArimaTable extends React.Component {
                         let month = data.time.substring(4, 6)
                         formattedDate = endMontDays[Number(month) - 1] + "-" + month + "-" + data.time.substring(0, 4)
                     }
+
+                    chartData.push(Number((Math.round(data.value * 100) / 100).toFixed(2)));
+                    chartDate.push(formattedDate);
 
                     tableData.push(<tr key={index}>
                         <th scope="row">{index}</th>
@@ -164,6 +168,10 @@ class ArimaTable extends React.Component {
         return (
             <React.Fragment>
                 {pageContent}
+                <LineChart chartData={chartData} 
+                product = {this.props.product} 
+                chartDate={chartDate} 
+                periodspan={this.props.periodspan}/>
             </React.Fragment>
         );
     }

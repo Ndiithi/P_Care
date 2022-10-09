@@ -97,7 +97,8 @@ class Miner extends React.Component {
         let tabl = <ArimaTable
             product={this.state.productID}
             tableData={tableData}
-            model={this.state.model} />
+            model={this.state.model} 
+            periodspan = {this.state.periodspan}/>
 
         return (
             <BlockUi tag="div" blocking={this.state.blocking} message="Running predictor model, please wait">
