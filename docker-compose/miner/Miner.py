@@ -49,10 +49,12 @@ def predict(product_id, periodspan):
 
     #     q is the parameter associated with the moving average part of the model.
     # 
-    model = auto_arima(df["quantity"], start_p=10, start_q=10, max_p=30, max_q=30,
-                       m=12,
-                       seasonal=True, error_action='ignore',
-                       suppress_warnings=True, stepwise=False
+    model = auto_arima(df["quantity"], start_p=5,#start_q=5, #max_p=20 , max_q=30,
+                    #    m=12,
+                       seasonal=True,
+                    #     error_action='ignore',
+                    #    suppress_warnings=True, 
+                       stepwise=True
                        )
     model.fit(df["quantity"])
     forecast = model.predict(n_periods=periodspan)
