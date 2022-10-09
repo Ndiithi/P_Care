@@ -275,7 +275,7 @@ use Illuminate\Support\Facades\Gate;
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="small text-gray-500">March 7, 2021</div>
+                                        <div class="small text-gray-500">March 7, 2022</div>
                                         <span class="font-weight-bold">A new monthly report is ready to download!</span>
                                     </div>
                                 </a>
@@ -287,7 +287,7 @@ use Illuminate\Support\Facades\Gate;
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">March 7, 2021</div>
-                                        New APP Users Added For Homabay County
+                                        New APP Users Added
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -298,7 +298,7 @@ use Illuminate\Support\Facades\Gate;
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">April 7, 2021</div>
-                                        Data incomplete for Kisumu - SDP 1 form
+                                        Data incomplete
                                     </div>
                                 </a>
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
