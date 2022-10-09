@@ -41,11 +41,19 @@ def predict(product_id, periodspan):
 
     df = df.loc[df['product_id'] == product_id][[
         "date_purchased", "quantity"]].set_index("date_purchased")
-    model = auto_arima(df["quantity"], start_p=0, start_q=0, max_p=10, max_q=10,
-                       m=12, start_P=0, start_Q=0, max_Q=10, max_P=10,
+
+    # 
+    #     p is the parameter associated with the auto-regressive aspect of the model, which incorporates past values. For example, forecasting that if it rained a lot over the past few days, you state its likely that it will rain tomorrow as well.
+
+    #     d is the parameter associated with the integrated part of the model, which effects the amount of differencing to apply to a time series. You can imagine an example of this as forecasting that the amount of rain tomorrow will be similar to the amount of rain today, if the daily amounts of rain have been similar over the past few days.
+
+    #     q is the parameter associated with the moving average part of the model.
+    # 
+    model = auto_arima(df["quantity"], start_p=10, start_q=10, max_p=30, max_q=30,
+                       m=12,
                        seasonal=True, error_action='ignore',
-                       suppress_warnings=True, stepwise=False, randon_state=20,
-                       n_fits=50)
+                       suppress_warnings=True, stepwise=False
+                       )
     model.fit(df["quantity"])
     forecast = model.predict(n_periods=periodspan)
 
@@ -53,10 +61,20 @@ def predict(product_id, periodspan):
         start=df.index[-1], periods=periodspan, freq='M'), columns=['quantity'])
 
     projection = []
-    for index, row in forecast.iterrows():
-        print (index)
+    
+    for index, row in df.iterrows():
         try:
-            if(row['quantity']==row['quantity']): #check for NANs
+            if (row['quantity'] == row['quantity']):  # check for NANs
+                _projection = {}
+                _projection["time"] = index
+                _projection["value"] = int(row['quantity'])
+                projection.append(_projection)
+        except Exception as e:
+            print(e)
+
+    for index, row in forecast.iterrows():
+        try:
+            if (row['quantity'] == row['quantity']):  # check for NANs
                 _projection = {}
                 _projection["time"] = index
                 _projection["value"] = row['quantity']
@@ -64,4 +82,4 @@ def predict(product_id, periodspan):
         except Exception as e:
             print(e)
 
-    return jsonify(projection)
+    return projection

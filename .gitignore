@@ -39,3 +39,12 @@ package-lock.json
 public/js/app.js
 
 *.pyc
+
+public/1.js.LICENSE.txt
+public/2.js.LICENSE.txt
+public/3.js
+public/3.js.LICENSE.txt
+public/js/app.js.LICENSE.txt
+modified:   docker-compose/miner/__pycache__/Miner.cpython-310.pyc
+modified:   docker-compose/miner/__pycache__/Prophet.cpython-310.pyc
+modified:   docker-compose/miner/__pycache__/db.cpython-310.pyc
