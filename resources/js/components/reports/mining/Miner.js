@@ -22,7 +22,7 @@ class Miner extends React.Component {
             productID: 'N02BA',
             selectedProductValue: [],
             periodspan: 15,
-            model: 'arima',
+            model: 'prophet',
             blocking: true,
         }
         this.getPrediction = this.getPrediction.bind(this);
@@ -89,7 +89,8 @@ class Miner extends React.Component {
             } else {
                 tableData = this.state.predict_data['projection']
             }
-
+            console.log("Table data")
+            console.log(tableData)
         } catch (err) {
             console.log(err);
         }

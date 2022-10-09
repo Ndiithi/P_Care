@@ -84,10 +84,9 @@ class ArimaTable extends React.Component {
                         let day = date.toLocaleString("default", { day: "2-digit" });
                         formattedDate = day + "-" + month + "-" + year;
                     } else {
-                        let d = new Date(data.time);
-                        let month = d.getMonth();
-                        let year = d.getFullYear();
-                        formattedDate = data.time.substring(4, 6) + "-" + data.time.substring(0, 4);
+                        let endMontDays = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+                        let month = data.time.substring(4, 6)
+                        formattedDate = endMontDays[Number(month) - 1] + "-" + month + "-" + data.time.substring(0, 4)
                     }
 
                     tableData.push(<tr key={index}>
