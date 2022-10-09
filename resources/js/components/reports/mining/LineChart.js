@@ -21,16 +21,16 @@ class LineChart extends React.Component {
                 },
 
                 subtitle: {
-                    text: 'Source: <a href="https://irecusa.org/programs/solar-jobs-census/" target="_blank">IREC</a>'
+                    text: ''
                 },
 
                 yAxis: {
                     title: {
-                        text: 'Temperature'
+                        text: 'No Of Items'
                     },
                     labels: {
                         formatter: function () {
-                            return this.value + '°';
+                            return this.value;
                         }
                     }
                 },
@@ -39,7 +39,7 @@ class LineChart extends React.Component {
                     categories: [],
                     // ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun','Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                     accessibility: {
-                        description: 'Months of the year'
+                        description: 'Period'
                     }
                 },
 
@@ -91,8 +91,7 @@ class LineChart extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        console.log("checking changes")
-        console.log(this.props.chartData)
+     
         if (
             this.props.chartData != prevProps.chartData
         ) {
@@ -105,8 +104,7 @@ class LineChart extends React.Component {
                         data: this.props.chartData
                     }],
                     title: {
-                        text: 'Sales Prediction for '+ this.props.product +
-                         ' for a period of '+ this.props.periodspan + ' months'
+                        text: this.props.title
                     },
                 }
             })

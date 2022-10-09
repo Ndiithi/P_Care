@@ -170,7 +170,9 @@ class ArimaTable extends React.Component {
                 <LineChart chartData={chartData} 
                 product = {this.props.product} 
                 chartDate={chartDate} 
-                periodspan={this.props.periodspan}/>
+                title = {'Sales Prediction for '+ this.props.product +
+                ' for a period of '+ this.props.periodspan + ' months'}
+                />
                 <br/>
                 {pageContent}
                 
