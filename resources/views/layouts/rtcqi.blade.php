@@ -42,7 +42,7 @@ use Illuminate\Support\Facades\Gate;
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('home') }}">
                 <div class="sidebar-brand-icon">
-                    <img style="max-width: 80%" src="{{URL('/images/coat.png')}}" alt="">
+                    <img style="max-width: 80%" src="{{URL('/images/favicon/favicon-32x32.png')}}" alt="">
                 </div>
                 <div style="margin-left: 0px !important" class="sidebar-brand-text mx-3">Olga Pharma</div>
             </a>
