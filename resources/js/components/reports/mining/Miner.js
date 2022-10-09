@@ -22,7 +22,7 @@ class Miner extends React.Component {
             productID: 'N02BA',
             selectedProductValue: [],
             periodspan: 15,
-            model: 'prophet',
+            model: 'arima',
             blocking: true,
         }
         this.getPrediction = this.getPrediction.bind(this);
