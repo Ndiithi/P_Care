@@ -43,7 +43,7 @@ services:
   miner:
     container_name: app-miner
     restart: on-failure
-    ports:
+    # ports:
     # - 5000:5001
     build:
         context: ./
