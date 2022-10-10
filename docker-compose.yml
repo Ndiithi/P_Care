@@ -44,7 +44,7 @@ services:
     container_name: app-miner
     restart: on-failure
     ports:
-    - 5000:5000
+    # - 5000:5001
     build:
         context: ./
         dockerfile: docker-compose/miner/Dockerfile
