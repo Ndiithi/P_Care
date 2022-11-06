@@ -22,7 +22,7 @@ class Miner extends React.Component {
             productID: 'N02BA',
             selectedProductValue: [],
             periodspan: 15,
-            model: 'arima',
+            model: 'prophet',
             blocking: true,
         }
         this.getPrediction = this.getPrediction.bind(this);
@@ -105,7 +105,7 @@ class Miner extends React.Component {
 
                 <form>
                     <div className="form-row">
-                        <div className="col-md-6 col-sm-6">
+                        <div className="col-md-8 col-sm-8">
                             <Select
                                 // value={this.state.selectedValue}
                                 onChange={(product) => {
@@ -119,7 +119,7 @@ class Miner extends React.Component {
 
                         </div>
 
-                        <div className="col-md-3 col-sm-3">
+                        {/* <div className="col-md-3 col-sm-3">
                             <Select
                                 // value={this.state.selectedValue}
                                 onChange={(model) => {
@@ -129,14 +129,15 @@ class Miner extends React.Component {
                                 placeholder="Select Model"
                                 options={
                                     [
-                                        { value: 'arima', label: "Arima" },
-                                        { value: 'prophet', label: "Prophet" }]
+                                        { value: 'prophet', label: "Arima" },
+                                        // { value: 'prophet', label: "Prophet" }
+                                    ]
                                 }
                             />
 
-                        </div>
+                        </div> */}
 
-                        <div className="col-md-3 col-sm-3">
+                        <div className="col-md-4 col-sm-4">
                             <input type="number" onChange={(event) => {
                                 this.getPrediction(this.state.model, this.state.productID, event.target.value);
                             }}
