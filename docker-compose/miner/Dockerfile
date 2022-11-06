@@ -12,6 +12,7 @@ COPY docker-compose/miner/requirements.txt /opt
 COPY docker-compose/miner/Miner.py /opt
 COPY docker-compose/miner/db.py /opt
 COPY docker-compose/miner/Prophet.py /opt
+RUN pip install --trusted-host=pypi.python.org --trusted-host=pypi.org --trusted-host=files.pythonhosted.org prophet
 RUN pip install -r requirements.txt
 ENV FLASK_APP=Miner.py
 CMD [ "python", "-m" , "flask", "run", "--host=0.0.0.0"]
