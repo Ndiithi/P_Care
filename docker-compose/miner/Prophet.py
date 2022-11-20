@@ -19,8 +19,11 @@ def p_predict(product_id, periodspan):
 
     data = pd.DataFrame(SQL_Query)
 
-    m = Prophet()
+    m = Prophet(growth='logistic')
     data.columns = ['ds', 'y']
+    
+    data['cap'] = 1.2 * data['y'].max()
+    data['floor'] = 0
     m.fit(data)
 
     if (periodspan == None):
@@ -32,10 +35,10 @@ def p_predict(product_id, periodspan):
     #     periodtype = 'Y'
 
     future = m.make_future_dataframe(periods = periodspan,freq = 'M')
+    future['cap'] = 1.2 * data['y'].max()
+    future['floor'] = 0
 
     forecast = m.predict(future)
-
-    print(forecast)
 
     trend = []
     projection = []
