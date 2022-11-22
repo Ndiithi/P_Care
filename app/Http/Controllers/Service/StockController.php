@@ -32,7 +32,24 @@ class StockController extends Controller
                     'batch_no' => $batchNo
                 ]);
                 $stock->save();
+            } else {
+                DB::update("      
+                    UPDATE stocks
+                    SET no_of_items  = no_of_items + $noOfItems  where product_id = '$productId' and batch_no = '$batchNo'
+                ");
+            }
 
+            $purchase = Purchase::where('product_id', '=', $productId)
+                ->where('date_purchased', '=', date('Y-m-d'))
+                ->where('expiry_date', '=', $expiryDate)
+                ->where('batch_no', '=', $batchNo)->first();
+
+            if ($purchase != null) {
+                DB::update("      
+                        UPDATE purchases
+                        SET no_of_items  = no_of_items + $noOfItems  where product_id = '$productId' and batch_no = '$batchNo'
+                    ");
+            } else {
                 $purchase = new Purchase([
                     'no_of_items' => $noOfItems,
                     'product_id' => $productId,
@@ -41,14 +58,10 @@ class StockController extends Controller
                     'batch_no' => $batchNo
                 ]);
                 $purchase->save();
-            } else {
-                DB::update("      
-                    UPDATE stocks
-                    SET no_of_items  = no_of_items + $noOfItems  where product_id = '$productId' and batch_no = '$batchNo'
-                ");
             }
 
             return response()->json(['Message' => 'Saved successfully'], 200);
+            
         } catch (Exception $ex) {
             return ['Error' => '500', 'Message' => 'Could not save product ' . $ex->getMessage()];
         }
