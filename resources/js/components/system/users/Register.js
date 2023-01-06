@@ -87,27 +87,50 @@ class Register extends React.Component {
                 closeRegisterPage: false
             });
             $('#saveUserModal').modal('toggle');
-        } else {
+            return;
+        }
 
-            Updateuser(
-                this.state.first_name,
-                this.state.last_name,
-                this.state.email,
-                this.state.password,
-                this.state.role,
-                this.props.selectedUser.id,
-                this.state.selectedViewableRoles
-            ).then(response => {
-                let message = response.data.Message
 
-                this.setState({
-                    message: message
-                });
+        if (!isValidPassword(this.state.password)) {
+            this.setState({
+                message: "Password does not meet threshold",
+                closeRegisterPage: false,
+                showPasswordValidationErrors: true,
+            });
+            $('#saveUserModal').modal('toggle');
+            return;
+        }
 
-                $('#saveUserModal').modal('toggle');
+        if (!isValidEmail(this.state.email)) {
+            this.setState({
+                message: "The email provided is not valid",
+                closeRegisterPage: false,
+                showPasswordValidationErrors: false,
+                showMailValidationErrors: true,
+            });
+            $('#saveUserModal').modal('toggle');
+            return;
+        }
+
+        Updateuser(
+            this.state.first_name,
+            this.state.last_name,
+            this.state.email,
+            this.state.password,
+            this.state.role,
+            this.props.selectedUser.id,
+            this.state.selectedViewableRoles
+        ).then(response => {
+            let message = response.data.Message
+
+            this.setState({
+                message: message
             });
 
-        }
+            $('#saveUserModal').modal('toggle');
+        });
+
+
     }
 
     saveUser() {
