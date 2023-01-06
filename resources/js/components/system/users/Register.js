@@ -80,7 +80,8 @@ class Register extends React.Component {
 
     updateCurrentUser() {
         if (this.state.first_name.length == 0 ||
-            this.state.email.length == 0) {
+            this.state.email.length == 0 ||
+            this.state.role.length == 0) {
 
             this.setState({
                 message: "Kindly fill in the required data marked in *",
@@ -90,16 +91,18 @@ class Register extends React.Component {
             return;
         }
 
-
-        if (!isValidPassword(this.state.password)) {
-            this.setState({
-                message: "Password does not meet threshold",
-                closeRegisterPage: false,
-                showPasswordValidationErrors: true,
-            });
-            $('#saveUserModal').modal('toggle');
-            return;
+        if (this.state.password.length != 0) {
+            if (!isValidPassword(this.state.password)) {
+                this.setState({
+                    message: "Password does not meet threshold",
+                    closeRegisterPage: false,
+                    showPasswordValidationErrors: true,
+                });
+                $('#saveUserModal').modal('toggle');
+                return;
+            }
         }
+
 
         if (!isValidEmail(this.state.email)) {
             this.setState({
