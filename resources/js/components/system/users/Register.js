@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { FetchRoles, Saveuser, FetchUserDetails, Updateuser } from '../../utils/Helpers';
+import { FetchRoles, Saveuser, FetchUserDetails, Updateuser, isValidPassword, isValidEmail } from '../../utils/Helpers';
 import DualListBox from 'react-dual-listbox';
 
 
@@ -21,7 +21,8 @@ class Register extends React.Component {
             password: '',
             closeRegisterPage: true,
             canViewAssignRolesList: false,
-            showPasswordValidationErrors: false
+            showPasswordValidationErrors: false,
+            showMailValidationErrors: false
         };
 
         this.saveUser = this.saveUser.bind(this);
@@ -128,14 +129,22 @@ class Register extends React.Component {
                 return
             }
 
-            // let paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
-            let paswd = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
-            if (!paswd.test(this.state.password)) {
-                let msg = "Hello" + "\n" + "world";
+            if (!isValidPassword(this.state.password)) {
                 this.setState({
                     message: "Password does not meet threshold",
                     closeRegisterPage: false,
                     showPasswordValidationErrors: true,
+                });
+                $('#saveUserModal').modal('toggle');
+                return
+            }
+
+            if (!isValidEmail(this.state.email)) {
+                this.setState({
+                    message: "The email provided is not valid",
+                    closeRegisterPage: false,
+                    showPasswordValidationErrors: false,
+                    showMailValidationErrors: true,
                 });
                 $('#saveUserModal').modal('toggle');
                 return
@@ -155,6 +164,7 @@ class Register extends React.Component {
                 this.setState({
                     message: response.data.Message,
                     showPasswordValidationErrors: false,
+                    showMailValidationErrors: false
                 });
 
                 $('#saveUserModal').modal('toggle');
@@ -230,11 +240,11 @@ class Register extends React.Component {
                                     this.state.showPasswordValidationErrors ?
                                         <div style={{ "color": "red" }}>
                                             <p>
-                                                Password must: <br/>
+                                                Password must: <br />
 
-                                                1. be 6-16 charcters long <br/>
-                                                2. one numeric digit <br/>
-                                                3. one special character 
+                                                1. be 6-16 charcters long <br />
+                                                2. one numeric digit <br />
+                                                3. one special character
                                             </p>
                                             <p></p>
                                         </div>

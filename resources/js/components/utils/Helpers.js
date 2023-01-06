@@ -413,7 +413,7 @@ export async function getProductGroup() {
 
 }
 
-export async function predict(product_id,periodspan,model) {
+export async function predict(product_id, periodspan, model) {
 
     try {
         const response = await axios.get(`${settings.rtcqiBaseApi}/predict/${product_id}/${periodspan}/${model}`);
@@ -422,6 +422,24 @@ export async function predict(product_id,periodspan,model) {
     } catch (err) {
         // Handle Error Here
         return err.response
+    }
+
+}
+
+export function isValidEmail(email) {
+
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export function isValidPassword(password) {
+    if (/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/.test(password)) {
+        return true;
+    } else {
+        return false;
     }
 
 }
