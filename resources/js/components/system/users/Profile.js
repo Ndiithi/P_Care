@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { updateUserProfile, FetchUserProfile } from '../../utils/Helpers';
+import { updateUserProfile, FetchUserProfile, isValidPassword, isValidEmail } from '../../utils/Helpers';
 import { v4 as uuidv4 } from 'uuid';
 
 class Profile extends React.Component {
@@ -15,7 +15,9 @@ class Profile extends React.Component {
             email: '',
             password: '',
             role_name: '',
-            showPassword: false
+            showPassword: false,
+            showPasswordValidationErrors: false,
+            showMailValidationErrors: false
         };
 
         this.updateProfile = this.updateProfile.bind(this);
@@ -56,31 +58,58 @@ class Profile extends React.Component {
 
         if (this.state.name == null
             || this.state.email == null
-            || this.state.name.length == 0
-            || this.state.email.length == 0) {
+            || this.state.name.length == 0) {
             this.setState({
                 message: "Please fill in required fields"
             });
             $('#updateUserModal').modal('toggle');
-        } else {
 
-            (async () => {
-
-                let response = await updateUserProfile(
-                    this.state.name,
-                    this.state.lastName,
-                    this.state.email,
-                    this.state.password
-                );
-                if (response) {
-                    this.setState({
-                        message: response.data.Message
-                    });
-                    $('#updateUserModal').modal('toggle');
-                }
-
-            })();
+            return;
         }
+
+        if (this.state.password.length != 0) {
+            if (!isValidPassword(this.state.password)) {
+                this.setState({
+                    message: "Password does not meet threshold",
+                    closeRegisterPage: false,
+                    showPasswordValidationErrors: true,
+                });
+                $('#updateUserModal').modal('toggle');
+                return;
+            }
+        }
+
+        if (!isValidEmail(this.state.email)) {
+            this.setState({
+                message: "The email provided is not valid",
+                closeRegisterPage: false,
+                showPasswordValidationErrors: false,
+                showMailValidationErrors: true,
+            });
+            $('#updateUserModal').modal('toggle');
+            return;
+        }
+
+
+        (async () => {
+
+            let response = await updateUserProfile(
+                this.state.name,
+                this.state.lastName,
+                this.state.email,
+                this.state.password
+            );
+            if (response) {
+                this.setState({
+                    message: response.data.Message,
+                    showPasswordValidationErrors: false,
+                    showMailValidationErrors: false
+                });
+                $('#updateUserModal').modal('toggle');
+            }
+
+        })();
+
 
     }
 
@@ -98,7 +127,7 @@ class Profile extends React.Component {
     };
 
     render() {
-       
+
 
         return (
             <React.Fragment>
@@ -118,6 +147,20 @@ class Profile extends React.Component {
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <h4 className="text-right">My Profile</h4>
                                 </div>
+                                {
+                                    this.state.showPasswordValidationErrors ?
+                                        <div style={{ "color": "red" }}>
+                                            <p>
+                                                Password must: <br />
+
+                                                1. be 6-16 charcters long <br />
+                                                2. one numeric digit <br />
+                                                3. one special character
+                                            </p>
+                                            <p></p>
+                                        </div>
+                                        :
+                                        ""}
                                 <div className="row mt-2">
                                     <div className="col-md-6"><label className="labels">Name <span style={{ "color": "red" }}>*</span></label>
                                         <input required type="text" className="form-control"
@@ -138,7 +181,7 @@ class Profile extends React.Component {
 
                                     <div className="col-md-12" style={{ "marginTop": "5px" }}><label className="labels">Password</label>
                                         <input type={this.state.showPassword ? "text" : "password"} className="form-control" onChange={() => this.passwordOnChange(event)} placeholder="********" />
-                                        <input onClick={() => this.toggleShowPassword()} type="checkBox" /> Show password 
+                                        <input onClick={() => this.toggleShowPassword()} type="checkBox" /> Show password
                                     </div>
 
                                 </div>
@@ -164,7 +207,7 @@ class Profile extends React.Component {
                                 </div>
 
                                 <div className="col-sm-6">
-                                   
+
                                 </div>
                             </div>
                         </div>
@@ -185,7 +228,7 @@ class Profile extends React.Component {
                                     <p>{this.state.message}</p>
                                 </div>
                                 <div className="modal-footer">
-                                    <button type="button" onClick={() => this.props.toggleDisplay()} className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
