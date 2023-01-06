@@ -20,23 +20,26 @@ class Register extends React.Component {
             email: '',
             password: '',
             closeRegisterPage: true,
-            canViewAssignRolesList: false
+            canViewAssignRolesList: false,
+            showPasswordValidationErrors: false
         };
 
         this.saveUser = this.saveUser.bind(this);
         this.updateCurrentUser = this.updateCurrentUser.bind(this);
         this.roleOnChange = this.roleOnChange.bind(this);
         this.viewableRolesOnChange = this.viewableRolesOnChange.bind(this);
+        this.replaceWithBr = this.replaceWithBr.bind(this);
+
     }
 
     componentDidMount() {
         (async () => {
             let roles = await FetchRoles();
-          
+
             if (this.props.userActionState == 'edit') {
 
                 let userDetails = await FetchUserDetails(this.props.selectedUser.id);
-              
+
                 let canViewAssignRolesList = false;
                 try {
                     canViewAssignRolesList = roles[userDetails['demographics']['role_id']]['authorities']['role'].includes(12) // check if has view role option 
@@ -76,7 +79,7 @@ class Register extends React.Component {
 
     updateCurrentUser() {
         if (this.state.first_name.length == 0 ||
-            this.state.email.length == 0 ) {
+            this.state.email.length == 0) {
 
             this.setState({
                 message: "Kindly fill in the required data marked in *",
@@ -115,33 +118,48 @@ class Register extends React.Component {
                 this.state.email.length == 0 ||
                 this.state.password.length == 0 ||
                 this.state.role.length == 0
-              
+
             ) {
                 this.setState({
                     message: "Kindly fill in the required data marked in *",
                     closeRegisterPage: false
                 });
                 $('#saveUserModal').modal('toggle');
-            } else {
-                let response = await Saveuser(
-                    this.state.first_name,
-                    this.state.last_name,
-                    this.state.email,
-                    this.state.password,
-                    this.state.role,
-                    this.state.selectedViewableRoles
-                );
-
-                if (response) {
-
-                    this.setState({
-                        message: response.data.Message
-                    });
-
-                    $('#saveUserModal').modal('toggle');
-                }
-
+                return
             }
+
+            // let paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+            let paswd = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/;
+            if (!paswd.test(this.state.password)) {
+                let msg = "Hello" + "\n" + "world";
+                this.setState({
+                    message: "Password does not meet threshold",
+                    closeRegisterPage: false,
+                    showPasswordValidationErrors: true,
+                });
+                $('#saveUserModal').modal('toggle');
+                return
+            }
+
+            let response = await Saveuser(
+                this.state.first_name,
+                this.state.last_name,
+                this.state.email,
+                this.state.password,
+                this.state.role,
+                this.state.selectedViewableRoles
+            );
+
+            if (response) {
+
+                this.setState({
+                    message: response.data.Message,
+                    showPasswordValidationErrors: false,
+                });
+
+                $('#saveUserModal').modal('toggle');
+            }
+
 
         })();
     }
@@ -173,7 +191,10 @@ class Register extends React.Component {
         });
     };
 
-   
+    replaceWithBr(txt) {
+        return txt.replace(/\n/g, "<br />")
+    }
+
 
     // render
     render() {
@@ -193,7 +214,7 @@ class Register extends React.Component {
 
         }
         let count = 1;
-       
+
         return (
             <React.Fragment>
 
@@ -205,7 +226,20 @@ class Register extends React.Component {
 
                         <div className="card mb-4 py-3 border-left-secondary">
                             <div className="card-body">
+                                {
+                                    this.state.showPasswordValidationErrors ?
+                                        <div style={{ "color": "red" }}>
+                                            <p>
+                                                Password must: <br/>
 
+                                                1. be 6-16 charcters long <br/>
+                                                2. one numeric digit <br/>
+                                                3. one special character 
+                                            </p>
+                                            <p></p>
+                                        </div>
+                                        :
+                                        ""}
                                 <div className="form-row">
                                     <div className="col-md-6 mb-3">
                                         <label htmlFor="validationTooltip01">First name *</label>
@@ -293,10 +327,10 @@ class Register extends React.Component {
                                 <br />
                                 <div className="form-row">
                                     <div className="col-md-6 mb-6">
-                                        <div style={{ "overflow": "scroll", "maxHeight": "300px", "minHeight": "300px", "paddingBottom": "6px", "paddingRight": "16px" }} >
+                                        <div style={{ "overflow": "scroll", "maxHeight": "100px", "minHeight": "100px", "paddingBottom": "6px", "paddingRight": "16px" }} >
                                         </div>
                                     </div>
-                                    
+
                                 </div>
 
                                 <button
@@ -343,7 +377,9 @@ class Register extends React.Component {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <p id="modal-message">{this.state.message}</p>
+                                <p id="modal-message">
+                                    {this.state.message}
+                                </p>
                             </div>
                             <div className="modal-footer">
                                 <button type="button"
